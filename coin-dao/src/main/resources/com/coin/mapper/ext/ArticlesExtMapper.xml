@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coin.mapper.ext.ArticlesExtMapper">
+
+    <select id="searchArticle" resultType="com.coin.resp.search.SearchArticleVo">
+        select
+        id as id,
+        title as title,
+        description as content,
+        comments as comments,
+        `status` as `status`,
+        user_id as userId,
+        visits as visits,
+        created_at as createdAt
+        from articles
+        <where>
+            title like concat('%',#{keyword},'%')
+            or
+            description like concat('%',#{keyword},'%')
+        </where>
+        order by id desc
+    </select>
+
+    <update id="addVisitsAmount">
+        update articles set visits = IFNULL(visits,0) + #{addNum}
+        where id = #{articleId}
+    </update>
+</mapper>

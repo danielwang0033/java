@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coin.mapper.ext.ActivityInviteFriendExtMapper">
+
+    <select id="checkByInviteCode" resultType="java.lang.Long">
+        select DISTINCT user_id
+        from `activity_invite_friend`
+        where `user_id` in
+        <foreach close=")" collection="codeList" item="listItem" open="(" separator=",">
+            #{listItem}
+        </foreach>
+    </select>
+</mapper>

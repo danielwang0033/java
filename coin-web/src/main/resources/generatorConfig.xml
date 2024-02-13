@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="MySqlContext" targetRuntime="MyBatis3" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <property name="autoDelimitKeywords" value="true"/>
+        <!--生成mapper.xml时覆盖原文件-->
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin" />
+        <!-- 为模型生成序列化方法-->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <!-- 为生成的Java模型创建一个toString方法 -->
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+        <!--可以自定义生成model的代码注释-->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+            <property name="suppressDate" value="true"/>
+            <property name="addRemarkComments" value="true"/>
+        </commentGenerator>
+        <!--配置数据库连接-->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://35.220.201.241:3306/bmw"
+                        userId="barplus"
+                        password="barplus03582">
+            <!--解决mysql驱动升级到8.0后不生成指定数据库代码的问题-->
+            <property name="nullCatalogMeansCurrent" value="true" />
+        </jdbcConnection>
+        <!--指定生成model的路径-->
+        <javaModelGenerator targetPackage="com.coin.entity" targetProject="./coin-entity/src/main/java"/>
+        <!--指定生成mapper.xml的路径-->
+        <sqlMapGenerator targetPackage="com.coin.mapper" targetProject="./coin-dao/src/main/resources"/>
+        <!--指定生成mapper接口的的路径-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.coin.mapper" targetProject="./coin-dao/src/main/java"/>
+
+        <!--生成全部表tableName设为%-->
+        <table tableName="t_dict_i18n">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+
+      <!--  <table tableName="activity_check_in">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+
+       <!-- <table tableName="activity">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+
+        <table tableName="activity_draw_number">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="activity_invite_friend">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="activity_prize">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table tableName="activity_prize_exchange">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+
+        <table tableName="activity_name_card">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+
+        <table tableName="users">
+           <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+       </table>-->
+
+<!--        <table tableName="reply_extend">
+           <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+           <columnOverride column="id" javaType="java.lang.Long"/>
+       </table>-->
+
+        <!--<table tableName="guess_reply">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="id" javaType="java.lang.Long"/>
+        </table>-->
+   <!--     <table tableName="guess">
+              <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+              <columnOverride column="id" javaType="java.lang.Long"/>
+          </table>-->
+        <!--   <table tableName="guess_item">
+             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+             <columnOverride column="id" javaType="java.lang.Long"/>
+         </table>
+         <table tableName="guess_bet">
+             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+             <columnOverride column="id" javaType="java.lang.Long"/>
+         </table>
+
+         <table tableName="guess_type">
+             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+             <columnOverride column="id" javaType="java.lang.Long"/>
+         </table>-->
+
+        <!--<table tableName="admin_permissions">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="http_path" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </table>-->
+        <!--<table tableName="orders">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="user_id" javaType="java.lang.Long"/>
+            <columnOverride column="good_Id" javaType="java.lang.Long"/>
+        </table>-->
+        <!--<table tableName="personal_access_tokens">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="abilities" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </table>-->
+        <!--<table tableName="threads" delimitIdentifiers="true">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="id" javaType="java.lang.Long"/>
+            <columnOverride column="forumId" javaType="java.lang.Long"/>
+            <columnOverride column="pics" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <columnOverride column="thumbs" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <columnOverride column="content" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <columnOverride column="vids" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <columnOverride column="forum_id" javaType="java.lang.Long"/>
+            <columnOverride column="topic_id" javaType="java.lang.Long"/>
+            <columnOverride column="user_id" javaType="java.lang.Long"/>
+        </table>-->
+       <!--<table tableName="article_comments">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="article_id" javaType="java.lang.Long"/>
+            <columnOverride column="user_id" javaType="java.lang.Long"/>
+           <columnOverride column="content" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </table>-->
+        <!--<table tableName="thread_reply">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="id" javaType="java.lang.Long"/>
+            <columnOverride column="content" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <columnOverride column="pics" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <columnOverride column="thread_id" javaType="java.lang.Long"/>
+            <columnOverride column="reply_id" javaType="java.lang.Long"/>
+            <columnOverride column="user_id" javaType="java.lang.Long"/>
+        </table>-->
+
+        <!--<table tableName="report_reply">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="content" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <columnOverride column="report_id" javaType="java.lang.Long"/>
+            <columnOverride column="user_id" javaType="java.lang.Long"/>
+        </table>-->
+        <!--<table tableName="articles">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="id" javaType="java.lang.Long"/>
+            <columnOverride column="description" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <columnOverride column="content" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <columnOverride column="user_id" javaType="java.lang.Long"/>
+            <columnOverride column="art_group_id" javaType="java.lang.Long"/>
+        </table>-->
+        <!--<table tableName="match_bbtechs">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="id" javaType="java.lang.Long"/>
+        </table>-->
+
+        <!--这个表的id需要单独处理，或者后期改造为自增主键-->
+        <!--<table tableName="notifications">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="data" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </table>-->
+        <!--<table tableName="admin_extensions">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="id" javaType="java.lang.Long"/>
+            <columnOverride column="options" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </table>-->
+        <!--<table tableName="goods">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="content" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </table>-->
+        <!--<table tableName="jobs">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="payload" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </table>-->
+        <!--<table tableName="failed_jobs">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="connection" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <columnOverride column="queue" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <columnOverride column="payload" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <columnOverride column="exception" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </table>-->
+        <!--<table tableName="telescope_entries">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="content" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </table>-->
+
+
+        <!--<table tableName="admin_settings">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="value" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </table>-->
+        <!--<table tableName="reports" delimitIdentifiers="true">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="report_content" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <columnOverride column="process" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <columnOverride column="result" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </table>-->
+        <!--<table tableName="matchs">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="id" javaType="java.lang.Long"/>
+            <columnOverride column="videos" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </table>-->
+        <!--<table tableName="match_leagues">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+<!--        <table tableName="match_videos">-->
+<!--            <generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+<!--            <columnOverride column="id" javaType="java.lang.Long"/>-->
+<!--        </table>-->
+        <!--<table tableName="admin_extension_histories">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="detail" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </table>-->
+
+        <!--<table tableName="t_dict">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="id" javaType="java.lang.Long"/>
+        </table>-->
+
+        <!--<table tableName="forum_sub_navs">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+
+        <!--<table tableName="transactions">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+
+
+        <!--<table tableName="match_fbtechs">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="id" javaType="java.lang.Long"/>
+        </table>-->
+        <!--<table tableName="forums">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="id" javaType="java.lang.Long"/>
+        </table>-->
+
+        <!--<table tableName="match_scores">
+        </table>-->
+
+        <!--<table tableName="migrations">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="id" javaType="java.lang.Long"/>
+        </table>-->
+      <!--  <table tableName="rooms">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="id" javaType="java.lang.Long"/>
+        </table>-->
+
+        <!--<table tableName="thread_topics" delimitIdentifiers="true">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+        <!--<table tableName="admin_menu">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+        <!--<table tableName="admin_permission_menu">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+
+        <!--<table tableName="admin_role_menu">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+        <!--<table tableName="admin_role_permissions">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+        <!--<table tableName="admin_roles">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+        <!--<table tableName="admin_role_users">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+        <!--<table tableName="admin_users">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+        <!--<table tableName="ads">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+        <!--<table tableName="ad_slots">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+        <!--<table tableName="ad_tracks">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+
+        <!--<table tableName="article_groups">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+
+
+        <!--<table tableName="favorites">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+        <!--<table tableName="followables">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+        <!--<table tableName="good_tags">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+
+        <!--<table tableName="likes">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+        <!--<table tableName="password_reset_tokens">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+        <!--<table tableName="report_name_tags">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+        <!--<table tableName="report_reasons">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+
+        <!--<table tableName="reports">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="report_content" javaType="java.lang.String" />
+        </table>-->
+        <!--<table tableName="report_tags">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+        <!--<table tableName="statistics">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+
+        <!--<table tableName="telescope_entries_tags">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+        <!--<table tableName="telescope_monitoring">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+        <!--<table tableName="thread_tag_log">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+        <!--<table tableName="thread_tags">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+        <!--<table tableName="transfers">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+        <!--<table tableName="user_exp_logs">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+        <!--<table tableName="user_level">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+        <!--<table tableName="visits">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+        <!--<table tableName="wallets">
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
+    </context>
+</generatorConfiguration>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coin.mapper.ext.TDictExtMapper">
+
+    <select id="getByTypeAndCode" resultType="com.coin.entity.TDict">
+        select
+        id as id,
+        dict_type as dictType,
+        dict_code as dictCode,
+        dict_name as dictName,
+        dict_val as dictVal,
+        dict_val_big as dictValBig,
+        parent_dict_code as parentDictCode,
+        is_default as isDefault,
+        status as status
+        from t_dict
+        where dict_type = #{type} and dict_code = #{code}
+        limit 1
+    </select>
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coin.mapper.ext.MatchVideosExtMapper">
+
+    <insert id="insertBatch">
+        insert into match_videos (matchId, created_at, updated_at,
+        streamId, pushing, streamType,
+        streamName, m3u8, line
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+        (
+            #{item.matchid,jdbcType=VARCHAR}, #{item.createdAt,jdbcType=TIMESTAMP}, #{item.updatedAt,jdbcType=TIMESTAMP},
+            #{item.streamid,jdbcType=INTEGER}, #{item.pushing,jdbcType=INTEGER}, #{item.streamtype,jdbcType=INTEGER},
+            #{item.streamname,jdbcType=VARCHAR}, #{item.m3u8,jdbcType=VARCHAR}, #{item.line,jdbcType=LONGVARCHAR}
+        )
+        </foreach>
+    </insert>
+
+    <delete id="truncateVideos">
+        truncate table match_videos
+    </delete>
+
+    <select id="selectStreamList" resultType="java.lang.String">
+        select
+        m3u8
+        from match_videos
+        where matchId=#{matchId}
+    </select>
+</mapper>

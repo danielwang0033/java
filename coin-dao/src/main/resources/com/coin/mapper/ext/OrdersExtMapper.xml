@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coin.mapper.ext.OrdersExtMapper">
+
+  <sql id="Base_Column_List">
+    good_id as goodId, COUNT(id) as orderCount
+  </sql>
+
+  <select id="selectByLeaderboard" resultType="com.coin.resp.OrdersResp">
+    select good_id as goodId, COUNT(id) as orderCount  from orders
+    where created_at >= #{created_at_ge} and status <![CDATA[<]]> 3
+    group by good_id
+    order by orderCount desc
+  </select>
+</mapper>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coin.mapper.ext.UsersExtMapper">
+
+    <sql id="Base_Column_List">
+        id, name, email, email_modified_at as emailModifiedAt, email_verified_at as emailVerifiedAt, password, is_baned
+        as isBaned, exp, is_forum_admin as isForumAdmin,
+        is_super_admin as isSuperAdmin, is_ban_post as isBanPost, is_ban_forum as isBanForum, rocket_username as
+        rocketUsername, rocket_user_login_token as rocketUserLoginToken,
+        rocket_user_id as rocketUserId, online_until as onlineUntil, last_login_date as lastLoginDate, bio, avatar,
+        remember_token as rememberToken, created_at as createdAt,
+        updated_at as updatedAt, qq, wechat, phone, pwd
+    </sql>
+
+    <select id="selectByName" resultType="com.coin.entity.Users">
+        select
+        <include refid="Base_Column_List"/>
+        from users
+        where name = #{name}
+        limit 1
+    </select>
+
+    <select id="selectByEmail" resultType="com.coin.entity.Users">
+        select
+        <include refid="Base_Column_List"/>
+        from users
+        where email = #{email}
+        limit 1
+    </select>
+
+    <select id="selectUserSimpleInfoByIdList" resultType="com.coin.resp.user.UserSimpleInfoVo">
+        select
+        id as id,
+        `name` as `name`,
+        email as email,
+        is_baned as isBaned,
+        `exp` as `exp`,
+        is_forum_admin as isForumAdmin,
+        is_super_admin as isSuperAdmin,
+        is_ban_post as isBanPost,
+        is_ban_forum as isBanForum,
+        avatar as avatar
+        from users
+        where id in
+        <foreach close=")" collection="idList" item="listItem" open="(" separator=",">
+            #{listItem}
+        </foreach>
+    </select>
+
+    <select id="selectUserSimpleInfoById" resultType="com.coin.resp.user.UserSimpleInfoVo">
+        select
+        id as id,
+        `name` as `name`,
+        email as email,
+        is_baned as isBaned,
+        `exp` as `exp`,
+        is_forum_admin as isForumAdmin,
+        is_super_admin as isSuperAdmin,
+        is_ban_post as isBanPost,
+        is_ban_forum as isBanForum,
+        avatar as avatar,
+        bio as bio,
+        created_at as createdAt
+        from users
+        where id = #{id}
+    </select>
+
+    <select id="selectJoinRoomByNameAndStatus" resultType="com.coin.resp.UsersResp">
+        select
+        a.id, a.name, a.email, a.email_modified_at, a.email_verified_at, a.password, a.is_baned, a.exp,
+        a.is_forum_admin,
+        a.is_super_admin, a.is_ban_post, a.is_ban_forum, a.rocket_username, a.rocket_user_login_token as
+        rocketUserLoginToken,
+        a.rocket_user_id as rocketUserId, a.rocket_username as rocketUsername, a.online_until, a.last_login_date, a.bio,
+        a.avatar, a.remember_token, a.created_at,
+        a.updated_at, a.qq, a.wechat, a.phone, b.mute as mute, b.owner as owner
+        from users as a
+        left join rooms as b on a.rocket_user_id=b.rocket_user_id
+        where 1 and a.rocket_user_id is not null
+        <if test="name != null">
+            and a.name like concat('%',#{name},'%')
+        </if>
+        <if test="status != null ">
+            and a.status = #{status}
+        </if>
+        <if test="type != null and type==2">
+            and b.id is not null
+        </if>
+        <if test="type != null and type==3">
+            and b.id is null
+        </if>
+        order by a.id desc
+    </select>
+
+    <select id="searchUser" resultType="com.coin.resp.search.SearchUserVo">
+        select
+        id as id,
+        `name` as `name`,
+        `exp` as `exp`,
+        avatar as avatar
+        from users
+        <where>
+            name like concat('%',#{keyword},'%')
+        </where>
+        order by id desc
+    </select>
+
+    <update id="addUsedNum">
+        update users t set t.roulette_used_time = t.roulette_used_time+1
+        where t.id = #{id}
+        and t.roulette_used_time = #{rouletteUsedTime}
+        and t.roulette_total_time > t.roulette_used_time
+    </update>
+
+    <update id="addExpByUserId">
+        update users t set t.exp = t.exp + #{addExp}
+        where t.id = #{userId}
+        and t.exp >= 0
+    </update>
+
+    <update id="deductionDrawNumber">
+        update users t set t.draw_number_balance = t.draw_number_balance - 1
+        where t.id = #{userId}
+        and t.draw_number_balance >= 1
+    </update>
+
+    <update id="modifyEmail">
+        update users t
+        set t.email = #{newEmail}, t.email_modified_at = now(), t.email_verified_at = null
+        where t.id = #{userId} and t.email = #{oldEmail}
+    </update>
+
+    <select id="userDrawNumber" resultType="java.lang.Integer">
+        select draw_number_balance
+        from users
+        where id = #{userId}
+    </select>
+
+    <select id="userInviteCode" resultType="java.lang.String">
+        select invite_code
+        from users
+        where id = #{userId}
+    </select>
+
+    <select id="pwdTest" resultType="com.coin.resp.user.UserPwdVo">
+        select id, password, pwd from users
+        <![CDATA[
+            where id <= #{id}
+        ]]>
+    </select>
+</mapper>

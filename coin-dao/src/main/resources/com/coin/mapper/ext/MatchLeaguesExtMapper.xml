@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coin.mapper.ext.MatchLeaguesExtMapper">
+    <insert id="insertBatch" >
+        insert into match_leagues (league_id, league_name, league_logo,
+        type, created_at, updated_at
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.leagueId,jdbcType=VARCHAR},
+            #{item.leagueName,jdbcType=VARCHAR}, #{item.leagueLogo,jdbcType=VARCHAR}, #{item.type,jdbcType=INTEGER},
+            #{item.createdAt,jdbcType=TIMESTAMP}, #{item.updatedAt,jdbcType=TIMESTAMP}
+            )
+        </foreach>
+    </insert>
+</mapper>

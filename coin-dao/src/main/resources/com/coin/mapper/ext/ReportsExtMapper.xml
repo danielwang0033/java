@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coin.mapper.ext.ReportsExtMapper">
+
+    <select id="selectByExample" resultType="com.coin.resp.ReportsResp">
+        select
+        a.id as id,
+        a.user_id as userId,
+        a.reported_website_url as reportedWebsiteUrl,
+        a.reported_website_name as reportedWebsiteName,
+        a.report_reason_id as reportReasonId,
+        a.appeal_amount as appealAmount,
+        a.report_content as reportContent,
+        a.`desc` as `desc`,
+        a.reply_count as replyCount,
+        a.read_count as readCount,
+        a.tags as tags,
+        a.name_tag_id as nameTagId,
+        a.pics as pics,
+        a.need_thumb as needThumb,
+        a.thumbs as thumbs,
+        a.`status` as `status`,
+        a.submission_time as submissionTime,
+        a.acceptance_time as acceptanceTime,
+        a.completion_time as completionTime,
+        a.`process` as `process`,
+        a.`show_handtag` as `showHandtag`,
+        a.`handtag` as `handtag`,
+        a.`result` as `result`,
+        a.deleted_at as deletedAt,
+        a.created_at as createdAt,
+        a.updated_at as updatedAt,
+        b.name as userName
+        from reports a left join users b on a.user_id = b.id
+        <where>
+        <if test="req.id != null">
+            and a.id =#{req.id}
+        </if>
+        <if test="req.userId != null ">
+            and a.user_id =#{req.userId}
+        </if>
+        <if test="req.reportReasonId != null ">
+            and a.report_reason_id =#{req.reportReasonId}
+        </if>
+        <if test="req.nameTagId != null ">
+            and a.name_tag_id =#{req.nameTagId}
+        </if>
+        <if test="req.tags != null ">
+            and (a.tags like concat('["',#{req.tags},'",%')
+            or a.tags like concat('%,"',#{req.tags},'",%')
+            or a.tags like concat('%,"',#{req.tags},'"]')
+            or a.tags like concat('["',#{req.tags},'"]'))
+        </if>
+        <if test="req.status != null ">
+            and a.status =#{req.status}
+        </if>
+        <if test="req.reportedWebsiteName != null ">
+            and a.reported_website_name =#{req.reportedWebsiteName}
+        </if>
+        <if test="req.createdAtMin != null ">
+            and a.created_at <![CDATA[>=]]>#{req.createdAtMin}
+        </if>
+        <if test="req.createdAtMax != null ">
+            and a.created_at <![CDATA[<=]]>#{req.createdAtMax}
+        </if>
+            <if test="req.desc != null and req.desc != '' ">
+                and a.desc like CONCAT('%', #{req.desc}, '%')
+            </if>
+            <if test="req.userName != null and req.userName != '' ">
+                and b.name like CONCAT('%', #{req.userName}, '%')
+            </if>
+            and a.deleted_at is null
+        </where>
+            order by id desc
+    </select>
+
+    <select id="getStatistics" resultType="com.coin.resp.report.ReportsStatistics">
+        select report_reason_id as id, count(*) as count
+        from reports
+        where deleted_at is null
+        group by report_reason_id
+    </select>
+
+    <select id="getLeaderBoard" resultType="com.coin.resp.report.ReportsLeaderboard">
+        select name_tag_id as id, count(name_tag_id) as count
+        from reports
+        <where>
+            name_tag_id is not NULL
+            <if test="req.successType == 1 ">
+                and status = 2
+            </if>
+            <if test="req.successType == 2 ">
+                <![CDATA[
+                and status <> 2
+                ]]>
+            </if>
+            and deleted_at is null
+        </where>
+        group by name_tag_id
+        order by count desc
+    </select>
+
+
+    <select id="countByUserId" resultType="java.lang.Long">
+        select count(id) as count
+        from reports
+        where user_id = #{userId}
+        and deleted_at is null
+    </select>
+
+    <select id="searchReport" resultType="com.coin.resp.search.SearchReportVo">
+        select
+        a.id as id,
+        a.user_id as userId,
+        a.report_reason_id as reportReasonId,
+        a.`desc` as `content`,
+        a.reply_count as replyCount,
+        a.read_count as readCount,
+        a.`status` as `status`,
+        a.reported_website_url  as reportedWebsiteUrl,
+        a.reported_website_name  as reportedWebsiteName,
+        a.created_at as createdAt
+        from reports a
+        <where>
+            `desc` like concat('%',#{keyword},'%')
+            and deleted_at is null
+        </where>
+        order by id desc
+    </select>
+
+    <update id="addVisitsAmount">
+        update reports set read_count = IFNULL(read_count,0) + #{addNum}
+        where id = #{reportId}
+    </update>
+</mapper>

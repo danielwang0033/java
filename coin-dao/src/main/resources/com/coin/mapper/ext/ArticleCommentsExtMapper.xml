@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coin.mapper.ext.ArticleCommentsExtMapper">
+
+    <select id="countByArticleIdList" resultType="com.coin.resp.article.ArticleReplyCountVo">
+        select
+        article_id as articleId,
+        count(id) as count
+        from article_comments
+        where article_id in
+        <foreach close=")" collection="articleIdList" item="listItem" open="(" separator=",">
+            #{listItem}
+        </foreach>
+        group by article_id
+    </select>
+</mapper>

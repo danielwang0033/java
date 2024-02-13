@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coin.mapper.ext.FavoritesExtMapper">
+
+    <select id="findByType" resultType="com.coin.entity.Favorites">
+        select id
+        from favorites
+        where user_id = #{userId}
+        and favoriteable_type = #{type}
+        and favoriteable_id = #{favId}
+        limit 1
+    </select>
+</mapper>

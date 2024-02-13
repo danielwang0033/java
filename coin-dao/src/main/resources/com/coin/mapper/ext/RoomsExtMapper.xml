@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coin.mapper.ext.RoomsExtMapper">
+
+  <select id="selectList" resultType="com.coin.resp.RoomsResp">
+    select a.id, a.rid, a.rocket_user_id as rocketUserId, a.`owner`, a.mute
+    , b.leaguename as matchName
+    , c.name as userName
+    from rooms a left join matchs  b on a.rid = b.rid
+    left join users c on a.rocket_user_id = c.rocket_user_id
+    <where>
+      <if test="matchName != null and matchName != ''">
+         and b.leaguename like CONCAT('%', #{matchName}, '%')
+      </if>
+      <if test="userName != null and userName != ''">
+        and c.name like CONCAT('%', #{userName}, '%')
+      </if>
+      <if test="rid != null and rid != ''">
+        and a.rid like CONCAT('%', #{rid}, '%')
+      </if>
+      <if test="rocketUserId != null and rocketUserId != ''">
+        and a.rocket_user_id like CONCAT('%', #{rocketUserId}, '%')
+      </if>
+    </where>
+    order by a.id desc
+  </select>
+</mapper>

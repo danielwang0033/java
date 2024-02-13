@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coin.mapper.ext.MatchScoresExtMapper">
+
+    <insert id="insertBatch" >
+        insert into match_scores (
+        `id`, `name`, `logo`, `type`, `score`, `overTimeScore`, `halfScore`, `penaltyScore`, `firstScore`, `secondScore`,
+        `thirdScore`, `fourthScore`, `matchId`, `updated_at`, `created_at`
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.id,jdbcType=VARCHAR}, #{item.name,jdbcType=VARCHAR}, #{item.logo,jdbcType=VARCHAR},
+            #{item.type,jdbcType=INTEGER}, #{item.score,jdbcType=INTEGER}, #{item.overtimescore,jdbcType=INTEGER},
+            #{item.halfscore,jdbcType=INTEGER}, #{item.penaltyscore,jdbcType=INTEGER}, #{item.firstscore,jdbcType=INTEGER},
+            #{item.secondscore,jdbcType=INTEGER}, #{item.thirdscore,jdbcType=INTEGER}, #{item.fourthscore,jdbcType=INTEGER},
+            #{item.matchid,jdbcType=VARCHAR}, #{item.createdAt,jdbcType=TIMESTAMP}, #{item.updatedAt,jdbcType=TIMESTAMP}
+            )
+        </foreach>
+    </insert>
+
+    <select id="getTeamNameByMatchIdBatch" resultType="com.coin.entity.MatchScores">
+        select  id, name, matchId, type,logo,score,overtimescore
+        from match_scores
+        where matchId in
+        <foreach close=")" collection="matchIdList" item="listItem" open="(" separator=",">
+            #{listItem}
+        </foreach>
+    </select>
+</mapper>

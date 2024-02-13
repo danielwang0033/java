@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coin.mapper.ext.ThreadTagLogExtMapper">
+
+    <select id="findByTag" resultType="com.coin.entity.ThreadTagLog">
+        select id
+        from thread_tag_log
+        where
+        thread_id = #{threadId}
+        and tag = #{tag}
+        and action = #{action}
+        limit 1
+    </select>
+</mapper>

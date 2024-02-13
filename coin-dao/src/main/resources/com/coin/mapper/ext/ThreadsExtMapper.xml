@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coin.mapper.ext.ThreadsExtMapper">
+
+    <select id="countByUserIdList" resultType="com.coin.cache.UserThreadCountVo">
+        select
+        t.user_id as userId,
+        count(t.id) as threadCount
+        from threads t
+        where t.user_id in
+        <foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+        and deleted_at is null
+        group by t.user_id
+    </select>
+
+    <select id="countByUserId" resultType="java.lang.Long">
+        select
+        count(t.id) as threadCount
+        from threads t
+        where t.user_id = #{userId}
+        and deleted_at is null
+    </select>
+
+    <select id="searchForum" resultType="com.coin.resp.search.SearchForumVo">
+        select
+        id as id,
+        forum_id as forumId,
+        user_id as userId,
+        subject as subject,
+        read_count as readCount,
+        reply_count as replyCount,
+        `desc` as `desc`,
+        created_at as createdAt
+        from threads
+        <where>
+            (
+                subject like concat('%',#{keyword},'%')
+                or
+                `desc` like concat('%',#{keyword},'%')
+            )
+            and deleted_at is null
+        </where>
+        order by id desc
+    </select>
+
+    <update id="addVisitsAmount">
+        update threads set read_count = IFNULL(read_count,0) + #{addNum}
+        where id = #{threadId}
+    </update>
+</mapper>

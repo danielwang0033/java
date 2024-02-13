@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coin.mapper.ThreadReplyMapper">
+  <resultMap id="BaseResultMap" type="com.coin.entity.ThreadReply">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="thread_id" jdbcType="INTEGER" property="threadId" />
+    <result column="reply_id" jdbcType="INTEGER" property="replyId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="floor_no" jdbcType="INTEGER" property="floorNo" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="pics" jdbcType="VARCHAR" property="pics" />
+    <result column="need_process_pics" jdbcType="INTEGER" property="needProcessPics" />
+    <result column="last_modify_at" jdbcType="TIMESTAMP" property="lastModifyAt" />
+    <result column="last_modify_user_id" jdbcType="INTEGER" property="lastModifyUserId" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+    <result column="deleted_at" jdbcType="TIMESTAMP" property="deletedAt" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, thread_id, reply_id, user_id, floor_no, content, pics, need_process_pics, last_modify_at, 
+    last_modify_user_id, created_at, updated_at, deleted_at
+  </sql>
+  <select id="selectByExample" parameterType="com.coin.entity.ThreadReplyExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from thread_reply
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from thread_reply
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from thread_reply
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.coin.entity.ThreadReplyExample">
+    delete from thread_reply
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.coin.entity.ThreadReply">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into thread_reply (thread_id, reply_id, user_id, 
+      floor_no, content, pics, 
+      need_process_pics, last_modify_at, last_modify_user_id, 
+      created_at, updated_at, deleted_at
+      )
+    values (#{threadId,jdbcType=INTEGER}, #{replyId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
+      #{floorNo,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{pics,jdbcType=VARCHAR}, 
+      #{needProcessPics,jdbcType=INTEGER}, #{lastModifyAt,jdbcType=TIMESTAMP}, #{lastModifyUserId,jdbcType=INTEGER}, 
+      #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, #{deletedAt,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.coin.entity.ThreadReply">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into thread_reply
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="threadId != null">
+        thread_id,
+      </if>
+      <if test="replyId != null">
+        reply_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="floorNo != null">
+        floor_no,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="pics != null">
+        pics,
+      </if>
+      <if test="needProcessPics != null">
+        need_process_pics,
+      </if>
+      <if test="lastModifyAt != null">
+        last_modify_at,
+      </if>
+      <if test="lastModifyUserId != null">
+        last_modify_user_id,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+      <if test="deletedAt != null">
+        deleted_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="threadId != null">
+        #{threadId,jdbcType=INTEGER},
+      </if>
+      <if test="replyId != null">
+        #{replyId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="floorNo != null">
+        #{floorNo,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="pics != null">
+        #{pics,jdbcType=VARCHAR},
+      </if>
+      <if test="needProcessPics != null">
+        #{needProcessPics,jdbcType=INTEGER},
+      </if>
+      <if test="lastModifyAt != null">
+        #{lastModifyAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifyUserId != null">
+        #{lastModifyUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletedAt != null">
+        #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.coin.entity.ThreadReplyExample" resultType="java.lang.Long">
+    select count(*) from thread_reply
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update thread_reply
+    <set>
+      <if test="row.id != null">
+        id = #{row.id,jdbcType=INTEGER},
+      </if>
+      <if test="row.threadId != null">
+        thread_id = #{row.threadId,jdbcType=INTEGER},
+      </if>
+      <if test="row.replyId != null">
+        reply_id = #{row.replyId,jdbcType=INTEGER},
+      </if>
+      <if test="row.userId != null">
+        user_id = #{row.userId,jdbcType=INTEGER},
+      </if>
+      <if test="row.floorNo != null">
+        floor_no = #{row.floorNo,jdbcType=INTEGER},
+      </if>
+      <if test="row.content != null">
+        content = #{row.content,jdbcType=VARCHAR},
+      </if>
+      <if test="row.pics != null">
+        pics = #{row.pics,jdbcType=VARCHAR},
+      </if>
+      <if test="row.needProcessPics != null">
+        need_process_pics = #{row.needProcessPics,jdbcType=INTEGER},
+      </if>
+      <if test="row.lastModifyAt != null">
+        last_modify_at = #{row.lastModifyAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.lastModifyUserId != null">
+        last_modify_user_id = #{row.lastModifyUserId,jdbcType=INTEGER},
+      </if>
+      <if test="row.createdAt != null">
+        created_at = #{row.createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.updatedAt != null">
+        updated_at = #{row.updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.deletedAt != null">
+        deleted_at = #{row.deletedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update thread_reply
+    set id = #{row.id,jdbcType=INTEGER},
+      thread_id = #{row.threadId,jdbcType=INTEGER},
+      reply_id = #{row.replyId,jdbcType=INTEGER},
+      user_id = #{row.userId,jdbcType=INTEGER},
+      floor_no = #{row.floorNo,jdbcType=INTEGER},
+      content = #{row.content,jdbcType=VARCHAR},
+      pics = #{row.pics,jdbcType=VARCHAR},
+      need_process_pics = #{row.needProcessPics,jdbcType=INTEGER},
+      last_modify_at = #{row.lastModifyAt,jdbcType=TIMESTAMP},
+      last_modify_user_id = #{row.lastModifyUserId,jdbcType=INTEGER},
+      created_at = #{row.createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{row.updatedAt,jdbcType=TIMESTAMP},
+      deleted_at = #{row.deletedAt,jdbcType=TIMESTAMP}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.coin.entity.ThreadReply">
+    update thread_reply
+    <set>
+      <if test="threadId != null">
+        thread_id = #{threadId,jdbcType=INTEGER},
+      </if>
+      <if test="replyId != null">
+        reply_id = #{replyId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="floorNo != null">
+        floor_no = #{floorNo,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="pics != null">
+        pics = #{pics,jdbcType=VARCHAR},
+      </if>
+      <if test="needProcessPics != null">
+        need_process_pics = #{needProcessPics,jdbcType=INTEGER},
+      </if>
+      <if test="lastModifyAt != null">
+        last_modify_at = #{lastModifyAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifyUserId != null">
+        last_modify_user_id = #{lastModifyUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletedAt != null">
+        deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.coin.entity.ThreadReply">
+    update thread_reply
+    set thread_id = #{threadId,jdbcType=INTEGER},
+      reply_id = #{replyId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      floor_no = #{floorNo,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      pics = #{pics,jdbcType=VARCHAR},
+      need_process_pics = #{needProcessPics,jdbcType=INTEGER},
+      last_modify_at = #{lastModifyAt,jdbcType=TIMESTAMP},
+      last_modify_user_id = #{lastModifyUserId,jdbcType=INTEGER},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

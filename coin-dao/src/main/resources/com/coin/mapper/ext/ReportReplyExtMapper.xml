@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coin.mapper.ext.ReportReplyExtMapper">
+
+    <select id="pageList" resultType="com.coin.resp.ReportReplyResp">
+        select
+        a.id as id,
+        a.report_id as reportId,
+        a.user_id as userId,
+        a.content as content,
+        a.last_modify_at as lastModifyAt,
+        a.last_modify_user_id as lastModifyUserId,
+        a.created_at as createdAt,
+        a.updated_at as updatedAt,
+        a.deleted_at as deletedAt,
+        b.name as userName,
+        c.reported_website_name as reportName
+        from report_reply a
+        left join users b on a.user_id = b.id
+        left join reports c on a.report_id = c.id
+        <where>
+            <if test="req.userId != null">
+                and a.user_id = #{req.userId}
+            </if>
+            <if test="req.id != null">
+                and a.id = #{req.id}
+            </if>
+            and a.report_id = #{req.reportId}
+            and a.deleted_at is null
+        </where>
+        order by a.id desc
+    </select>
+
+    <select id="countByReportId" resultType="com.coin.resp.report.ReportReplyCountVo">
+        select report_id as reportId,
+        count(id) as count
+        from report_reply
+        where report_id in
+        <foreach close=")" collection="idList" item="listItem" open="(" separator=",">
+            #{listItem}
+        </foreach>
+        and deleted_at is null
+        group by report_id
+    </select>
+</mapper>

@@ -1,0 +1,638 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coin.mapper.UsersMapper">
+  <resultMap id="BaseResultMap" type="com.coin.entity.Users">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="email_modified_at" jdbcType="TIMESTAMP" property="emailModifiedAt" />
+    <result column="email_verified_at" jdbcType="TIMESTAMP" property="emailVerifiedAt" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="is_baned" jdbcType="INTEGER" property="isBaned" />
+    <result column="exp" jdbcType="INTEGER" property="exp" />
+    <result column="is_forum_admin" jdbcType="INTEGER" property="isForumAdmin" />
+    <result column="is_super_admin" jdbcType="INTEGER" property="isSuperAdmin" />
+    <result column="is_ban_post" jdbcType="INTEGER" property="isBanPost" />
+    <result column="is_ban_forum" jdbcType="INTEGER" property="isBanForum" />
+    <result column="rocket_username" jdbcType="VARCHAR" property="rocketUsername" />
+    <result column="rocket_user_login_token" jdbcType="VARCHAR" property="rocketUserLoginToken" />
+    <result column="rocket_user_id" jdbcType="VARCHAR" property="rocketUserId" />
+    <result column="online_until" jdbcType="TIMESTAMP" property="onlineUntil" />
+    <result column="last_login_date" jdbcType="TIMESTAMP" property="lastLoginDate" />
+    <result column="bio" jdbcType="VARCHAR" property="bio" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="remember_token" jdbcType="VARCHAR" property="rememberToken" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+    <result column="qq" jdbcType="VARCHAR" property="qq" />
+    <result column="wechat" jdbcType="VARCHAR" property="wechat" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="pwd" jdbcType="VARCHAR" property="pwd" />
+    <result column="rocket_status" jdbcType="VARCHAR" property="rocketStatus" />
+    <result column="a_uid" jdbcType="INTEGER" property="aUid" />
+    <result column="draw_number_balance" jdbcType="INTEGER" property="drawNumberBalance" />
+    <result column="name_card_balance" jdbcType="INTEGER" property="nameCardBalance" />
+    <result column="invite_code" jdbcType="VARCHAR" property="inviteCode" />
+    <result column="invited_by_user_id" jdbcType="BIGINT" property="invitedByUserId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, `name`, email, email_modified_at, email_verified_at, `password`, is_baned, `exp`, 
+    is_forum_admin, is_super_admin, is_ban_post, is_ban_forum, rocket_username, rocket_user_login_token, 
+    rocket_user_id, online_until, last_login_date, bio, avatar, remember_token, created_at, 
+    updated_at, qq, wechat, phone, pwd, rocket_status, a_uid, draw_number_balance, name_card_balance, 
+    invite_code, invited_by_user_id
+  </sql>
+  <select id="selectByExample" parameterType="com.coin.entity.UsersExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from users
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from users
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from users
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.coin.entity.UsersExample">
+    delete from users
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.coin.entity.Users">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into users (`name`, email, email_modified_at, 
+      email_verified_at, `password`, is_baned, 
+      `exp`, is_forum_admin, is_super_admin, 
+      is_ban_post, is_ban_forum, rocket_username, 
+      rocket_user_login_token, rocket_user_id, online_until, 
+      last_login_date, bio, avatar, 
+      remember_token, created_at, updated_at, 
+      qq, wechat, phone, 
+      pwd, rocket_status, a_uid, 
+      draw_number_balance, name_card_balance, invite_code, 
+      invited_by_user_id)
+    values (#{name,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{emailModifiedAt,jdbcType=TIMESTAMP}, 
+      #{emailVerifiedAt,jdbcType=TIMESTAMP}, #{password,jdbcType=VARCHAR}, #{isBaned,jdbcType=INTEGER}, 
+      #{exp,jdbcType=INTEGER}, #{isForumAdmin,jdbcType=INTEGER}, #{isSuperAdmin,jdbcType=INTEGER}, 
+      #{isBanPost,jdbcType=INTEGER}, #{isBanForum,jdbcType=INTEGER}, #{rocketUsername,jdbcType=VARCHAR}, 
+      #{rocketUserLoginToken,jdbcType=VARCHAR}, #{rocketUserId,jdbcType=VARCHAR}, #{onlineUntil,jdbcType=TIMESTAMP}, 
+      #{lastLoginDate,jdbcType=TIMESTAMP}, #{bio,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, 
+      #{rememberToken,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
+      #{qq,jdbcType=VARCHAR}, #{wechat,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{pwd,jdbcType=VARCHAR}, #{rocketStatus,jdbcType=VARCHAR}, #{aUid,jdbcType=INTEGER}, 
+      #{drawNumberBalance,jdbcType=INTEGER}, #{nameCardBalance,jdbcType=INTEGER}, #{inviteCode,jdbcType=VARCHAR}, 
+      #{invitedByUserId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.coin.entity.Users">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into users
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="emailModifiedAt != null">
+        email_modified_at,
+      </if>
+      <if test="emailVerifiedAt != null">
+        email_verified_at,
+      </if>
+      <if test="password != null">
+        `password`,
+      </if>
+      <if test="isBaned != null">
+        is_baned,
+      </if>
+      <if test="exp != null">
+        `exp`,
+      </if>
+      <if test="isForumAdmin != null">
+        is_forum_admin,
+      </if>
+      <if test="isSuperAdmin != null">
+        is_super_admin,
+      </if>
+      <if test="isBanPost != null">
+        is_ban_post,
+      </if>
+      <if test="isBanForum != null">
+        is_ban_forum,
+      </if>
+      <if test="rocketUsername != null">
+        rocket_username,
+      </if>
+      <if test="rocketUserLoginToken != null">
+        rocket_user_login_token,
+      </if>
+      <if test="rocketUserId != null">
+        rocket_user_id,
+      </if>
+      <if test="onlineUntil != null">
+        online_until,
+      </if>
+      <if test="lastLoginDate != null">
+        last_login_date,
+      </if>
+      <if test="bio != null">
+        bio,
+      </if>
+      <if test="avatar != null">
+        avatar,
+      </if>
+      <if test="rememberToken != null">
+        remember_token,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+      <if test="qq != null">
+        qq,
+      </if>
+      <if test="wechat != null">
+        wechat,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="pwd != null">
+        pwd,
+      </if>
+      <if test="rocketStatus != null">
+        rocket_status,
+      </if>
+      <if test="aUid != null">
+        a_uid,
+      </if>
+      <if test="drawNumberBalance != null">
+        draw_number_balance,
+      </if>
+      <if test="nameCardBalance != null">
+        name_card_balance,
+      </if>
+      <if test="inviteCode != null">
+        invite_code,
+      </if>
+      <if test="invitedByUserId != null">
+        invited_by_user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="emailModifiedAt != null">
+        #{emailModifiedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="emailVerifiedAt != null">
+        #{emailVerifiedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="isBaned != null">
+        #{isBaned,jdbcType=INTEGER},
+      </if>
+      <if test="exp != null">
+        #{exp,jdbcType=INTEGER},
+      </if>
+      <if test="isForumAdmin != null">
+        #{isForumAdmin,jdbcType=INTEGER},
+      </if>
+      <if test="isSuperAdmin != null">
+        #{isSuperAdmin,jdbcType=INTEGER},
+      </if>
+      <if test="isBanPost != null">
+        #{isBanPost,jdbcType=INTEGER},
+      </if>
+      <if test="isBanForum != null">
+        #{isBanForum,jdbcType=INTEGER},
+      </if>
+      <if test="rocketUsername != null">
+        #{rocketUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="rocketUserLoginToken != null">
+        #{rocketUserLoginToken,jdbcType=VARCHAR},
+      </if>
+      <if test="rocketUserId != null">
+        #{rocketUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="onlineUntil != null">
+        #{onlineUntil,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLoginDate != null">
+        #{lastLoginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bio != null">
+        #{bio,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="rememberToken != null">
+        #{rememberToken,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="qq != null">
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="wechat != null">
+        #{wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null">
+        #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="rocketStatus != null">
+        #{rocketStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="aUid != null">
+        #{aUid,jdbcType=INTEGER},
+      </if>
+      <if test="drawNumberBalance != null">
+        #{drawNumberBalance,jdbcType=INTEGER},
+      </if>
+      <if test="nameCardBalance != null">
+        #{nameCardBalance,jdbcType=INTEGER},
+      </if>
+      <if test="inviteCode != null">
+        #{inviteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="invitedByUserId != null">
+        #{invitedByUserId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.coin.entity.UsersExample" resultType="java.lang.Long">
+    select count(*) from users
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update users
+    <set>
+      <if test="row.id != null">
+        id = #{row.id,jdbcType=BIGINT},
+      </if>
+      <if test="row.name != null">
+        `name` = #{row.name,jdbcType=VARCHAR},
+      </if>
+      <if test="row.email != null">
+        email = #{row.email,jdbcType=VARCHAR},
+      </if>
+      <if test="row.emailModifiedAt != null">
+        email_modified_at = #{row.emailModifiedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.emailVerifiedAt != null">
+        email_verified_at = #{row.emailVerifiedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.password != null">
+        `password` = #{row.password,jdbcType=VARCHAR},
+      </if>
+      <if test="row.isBaned != null">
+        is_baned = #{row.isBaned,jdbcType=INTEGER},
+      </if>
+      <if test="row.exp != null">
+        `exp` = #{row.exp,jdbcType=INTEGER},
+      </if>
+      <if test="row.isForumAdmin != null">
+        is_forum_admin = #{row.isForumAdmin,jdbcType=INTEGER},
+      </if>
+      <if test="row.isSuperAdmin != null">
+        is_super_admin = #{row.isSuperAdmin,jdbcType=INTEGER},
+      </if>
+      <if test="row.isBanPost != null">
+        is_ban_post = #{row.isBanPost,jdbcType=INTEGER},
+      </if>
+      <if test="row.isBanForum != null">
+        is_ban_forum = #{row.isBanForum,jdbcType=INTEGER},
+      </if>
+      <if test="row.rocketUsername != null">
+        rocket_username = #{row.rocketUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="row.rocketUserLoginToken != null">
+        rocket_user_login_token = #{row.rocketUserLoginToken,jdbcType=VARCHAR},
+      </if>
+      <if test="row.rocketUserId != null">
+        rocket_user_id = #{row.rocketUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="row.onlineUntil != null">
+        online_until = #{row.onlineUntil,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.lastLoginDate != null">
+        last_login_date = #{row.lastLoginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.bio != null">
+        bio = #{row.bio,jdbcType=VARCHAR},
+      </if>
+      <if test="row.avatar != null">
+        avatar = #{row.avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="row.rememberToken != null">
+        remember_token = #{row.rememberToken,jdbcType=VARCHAR},
+      </if>
+      <if test="row.createdAt != null">
+        created_at = #{row.createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.updatedAt != null">
+        updated_at = #{row.updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.qq != null">
+        qq = #{row.qq,jdbcType=VARCHAR},
+      </if>
+      <if test="row.wechat != null">
+        wechat = #{row.wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="row.phone != null">
+        phone = #{row.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="row.pwd != null">
+        pwd = #{row.pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="row.rocketStatus != null">
+        rocket_status = #{row.rocketStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="row.aUid != null">
+        a_uid = #{row.aUid,jdbcType=INTEGER},
+      </if>
+      <if test="row.drawNumberBalance != null">
+        draw_number_balance = #{row.drawNumberBalance,jdbcType=INTEGER},
+      </if>
+      <if test="row.nameCardBalance != null">
+        name_card_balance = #{row.nameCardBalance,jdbcType=INTEGER},
+      </if>
+      <if test="row.inviteCode != null">
+        invite_code = #{row.inviteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="row.invitedByUserId != null">
+        invited_by_user_id = #{row.invitedByUserId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update users
+    set id = #{row.id,jdbcType=BIGINT},
+      `name` = #{row.name,jdbcType=VARCHAR},
+      email = #{row.email,jdbcType=VARCHAR},
+      email_modified_at = #{row.emailModifiedAt,jdbcType=TIMESTAMP},
+      email_verified_at = #{row.emailVerifiedAt,jdbcType=TIMESTAMP},
+      `password` = #{row.password,jdbcType=VARCHAR},
+      is_baned = #{row.isBaned,jdbcType=INTEGER},
+      `exp` = #{row.exp,jdbcType=INTEGER},
+      is_forum_admin = #{row.isForumAdmin,jdbcType=INTEGER},
+      is_super_admin = #{row.isSuperAdmin,jdbcType=INTEGER},
+      is_ban_post = #{row.isBanPost,jdbcType=INTEGER},
+      is_ban_forum = #{row.isBanForum,jdbcType=INTEGER},
+      rocket_username = #{row.rocketUsername,jdbcType=VARCHAR},
+      rocket_user_login_token = #{row.rocketUserLoginToken,jdbcType=VARCHAR},
+      rocket_user_id = #{row.rocketUserId,jdbcType=VARCHAR},
+      online_until = #{row.onlineUntil,jdbcType=TIMESTAMP},
+      last_login_date = #{row.lastLoginDate,jdbcType=TIMESTAMP},
+      bio = #{row.bio,jdbcType=VARCHAR},
+      avatar = #{row.avatar,jdbcType=VARCHAR},
+      remember_token = #{row.rememberToken,jdbcType=VARCHAR},
+      created_at = #{row.createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{row.updatedAt,jdbcType=TIMESTAMP},
+      qq = #{row.qq,jdbcType=VARCHAR},
+      wechat = #{row.wechat,jdbcType=VARCHAR},
+      phone = #{row.phone,jdbcType=VARCHAR},
+      pwd = #{row.pwd,jdbcType=VARCHAR},
+      rocket_status = #{row.rocketStatus,jdbcType=VARCHAR},
+      a_uid = #{row.aUid,jdbcType=INTEGER},
+      draw_number_balance = #{row.drawNumberBalance,jdbcType=INTEGER},
+      name_card_balance = #{row.nameCardBalance,jdbcType=INTEGER},
+      invite_code = #{row.inviteCode,jdbcType=VARCHAR},
+      invited_by_user_id = #{row.invitedByUserId,jdbcType=BIGINT}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.coin.entity.Users">
+    update users
+    <set>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="emailModifiedAt != null">
+        email_modified_at = #{emailModifiedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="emailVerifiedAt != null">
+        email_verified_at = #{emailVerifiedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="password != null">
+        `password` = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="isBaned != null">
+        is_baned = #{isBaned,jdbcType=INTEGER},
+      </if>
+      <if test="exp != null">
+        `exp` = #{exp,jdbcType=INTEGER},
+      </if>
+      <if test="isForumAdmin != null">
+        is_forum_admin = #{isForumAdmin,jdbcType=INTEGER},
+      </if>
+      <if test="isSuperAdmin != null">
+        is_super_admin = #{isSuperAdmin,jdbcType=INTEGER},
+      </if>
+      <if test="isBanPost != null">
+        is_ban_post = #{isBanPost,jdbcType=INTEGER},
+      </if>
+      <if test="isBanForum != null">
+        is_ban_forum = #{isBanForum,jdbcType=INTEGER},
+      </if>
+      <if test="rocketUsername != null">
+        rocket_username = #{rocketUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="rocketUserLoginToken != null">
+        rocket_user_login_token = #{rocketUserLoginToken,jdbcType=VARCHAR},
+      </if>
+      <if test="rocketUserId != null">
+        rocket_user_id = #{rocketUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="onlineUntil != null">
+        online_until = #{onlineUntil,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLoginDate != null">
+        last_login_date = #{lastLoginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bio != null">
+        bio = #{bio,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="rememberToken != null">
+        remember_token = #{rememberToken,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="qq != null">
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="wechat != null">
+        wechat = #{wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null">
+        pwd = #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="rocketStatus != null">
+        rocket_status = #{rocketStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="aUid != null">
+        a_uid = #{aUid,jdbcType=INTEGER},
+      </if>
+      <if test="drawNumberBalance != null">
+        draw_number_balance = #{drawNumberBalance,jdbcType=INTEGER},
+      </if>
+      <if test="nameCardBalance != null">
+        name_card_balance = #{nameCardBalance,jdbcType=INTEGER},
+      </if>
+      <if test="inviteCode != null">
+        invite_code = #{inviteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="invitedByUserId != null">
+        invited_by_user_id = #{invitedByUserId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.coin.entity.Users">
+    update users
+    set `name` = #{name,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      email_modified_at = #{emailModifiedAt,jdbcType=TIMESTAMP},
+      email_verified_at = #{emailVerifiedAt,jdbcType=TIMESTAMP},
+      `password` = #{password,jdbcType=VARCHAR},
+      is_baned = #{isBaned,jdbcType=INTEGER},
+      `exp` = #{exp,jdbcType=INTEGER},
+      is_forum_admin = #{isForumAdmin,jdbcType=INTEGER},
+      is_super_admin = #{isSuperAdmin,jdbcType=INTEGER},
+      is_ban_post = #{isBanPost,jdbcType=INTEGER},
+      is_ban_forum = #{isBanForum,jdbcType=INTEGER},
+      rocket_username = #{rocketUsername,jdbcType=VARCHAR},
+      rocket_user_login_token = #{rocketUserLoginToken,jdbcType=VARCHAR},
+      rocket_user_id = #{rocketUserId,jdbcType=VARCHAR},
+      online_until = #{onlineUntil,jdbcType=TIMESTAMP},
+      last_login_date = #{lastLoginDate,jdbcType=TIMESTAMP},
+      bio = #{bio,jdbcType=VARCHAR},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      remember_token = #{rememberToken,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      qq = #{qq,jdbcType=VARCHAR},
+      wechat = #{wechat,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      pwd = #{pwd,jdbcType=VARCHAR},
+      rocket_status = #{rocketStatus,jdbcType=VARCHAR},
+      a_uid = #{aUid,jdbcType=INTEGER},
+      draw_number_balance = #{drawNumberBalance,jdbcType=INTEGER},
+      name_card_balance = #{nameCardBalance,jdbcType=INTEGER},
+      invite_code = #{inviteCode,jdbcType=VARCHAR},
+      invited_by_user_id = #{invitedByUserId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coin.mapper.ext.ThreadReplyExtMapper">
+
+    <select id="pageList" resultType="com.coin.resp.ThreadReplyResp">
+        select
+        a.id as id,
+        a.thread_id as threadId,
+        a.reply_id as replyId,
+        a.user_id as userId,
+        a.floor_no as floorNo,
+        a.content as content,
+        a.pics as pics,
+        a.need_process_pics as needProcessPics,
+        a.last_modify_at as lastModifyAt,
+        a.last_modify_user_id as lastModifyUserId,
+        a.created_at as createdAt,
+        a.updated_at as updatedAt,
+        a.deleted_at as deletedAt,
+        b.subject as threadName,
+        c.id as forumId,
+        c.name as forumName,
+        d.name as userName
+        from thread_reply as a
+        left join threads b on a.thread_id = b.id
+        left join forums c on b.forum_id = c.id
+        left join users d on a.user_id = d.id
+        <where>
+            <if test="req.threadId != null">
+                and a.thread_id = #{req.threadId}
+            </if>
+            <if test="req.userId != null">
+                and a.user_id = #{req.userId}
+            </if>
+            <if test="req.forumId != null">
+                and c.id = #{req.forumId}
+            </if>
+            <if test="req.threadSubject != null and req.threadSubject != '' ">
+                and b.subject like CONCAT('%', #{req.threadSubject}, '%')
+            </if>
+            and a.deleted_at is null
+        </where>
+        order by a.id desc
+    </select>
+
+    <select id="countByThreadIdList" resultType="com.coin.resp.thread.ThreadsReplyCountVo">
+        select
+        thread_id as threadId,
+        count(id) as count
+        from thread_reply
+        where thread_id in
+        <foreach close=")" collection="threadIdList" item="listItem" open="(" separator=",">
+            #{listItem}
+        </foreach>
+        and deleted_at is null
+        group by thread_id
+    </select>
+
+    <select id="countByThreadId" resultType="java.lang.Long">
+        select
+        count(id) as count
+        from thread_reply
+        where thread_id = #{threadId}
+        and deleted_at is null
+    </select>
+
+    <select id="threadReplyByUserId" resultType="com.coin.resp.thread.ThreadReplyVo">
+        select
+        a.id as id,
+        a.thread_id as threadId,
+        b.subject as threadName,
+        a.user_id as userId,
+        d.name as userName,
+        d.avatar as avatar,
+        a.content as content,
+        a.pics as pics,
+        a.created_at as createdAt,
+        c.id as forumId,
+        c.name as forumName,
+        e.name as threadUserName,
+        e.avatar as threadUserAvatar
+        from thread_reply as a
+        left join threads b on a.thread_id = b.id
+        left join forums c on b.forum_id = c.id
+        left join users d on a.user_id = d.id
+        left join users e on b.user_id = e.id
+        <where>
+            a.user_id = #{req.userId}
+            and a.deleted_at is null
+        </where>
+        order by a.id desc
+    </select>
+</mapper>

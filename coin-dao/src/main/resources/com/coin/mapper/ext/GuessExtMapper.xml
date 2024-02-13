@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coin.mapper.ext.GuessExtMapper">
+
+    <select id="countByGuessType" resultType="java.lang.Long">
+        select COUNT(id) as c from guess
+        where guess_type_id = #{guessTypeId}
+    </select>
+
+    <select id="guessList" resultType="com.coin.resp.guess.GuessListVo">
+        select
+        a.id as id,
+        a.title as title,
+        a.guess_subject as guessSubject,
+        b.name as guessTypeName,
+        a.content_snippet as contentSnippet,
+        a.content_images as contentImages,
+        a.visits as visits,
+        a.comments as comments,
+        a.admin_user_id as adminUserId,
+        c.name as adminUserName,
+        c.avatar as adminUserAvatar,
+        c.exp as adminUserExp,
+        a.`status` as `status`,
+        a.begin_time as beginTime,
+        a.end_time as endTime,
+        a.match_start_time as matchStartTime
+        from guess a
+        left join guess_type b on a.guess_type_id = b.id
+        left join users c on a.admin_user_id = c.id
+        where a.status in (2,3) and b.status = 1
+        <if test="req.guessTypeId != null">
+            and guess_type_id =#{req.guessTypeId}
+        </if>
+        <if test="req.sortType == 'new' ">
+            order by a.status asc, a.sort desc, a.updated_at desc
+        </if>
+        <if test="req.sortType == 'hot' ">
+            order by a.status asc, a.sort desc, a.visits desc
+        </if>
+        <if test="req.sortType == 'default' ">
+            order by a.status asc, a.sort desc, a.id desc
+        </if>
+    </select>
+
+    <select id="selectWaitSync" resultType="com.coin.entity.Guess">
+        select
+        id as id,
+        title as title,
+        `status` as `status`,
+        begin_time as beginTime,
+        end_time as endTime
+        from guess
+        where
+        <![CDATA[
+        (begin_time > #{nowBefore} and begin_time < #{nowAfter})
+        or
+        (end_time > #{nowBefore} and end_time < #{nowAfter})
+        ]]>
+        and status in (1,2)
+    </select>
+
+    <update id="addCommentCount">
+        update guess set comments = IFNULL(comments,0) + 1
+        where id = #{guessId}
+    </update>
+
+    <update id="subtractCommentAmount">
+        update guess set comments = IFNULL(comments,0) - 1
+        where id = #{guessId} and IFNULL(comments,0) - 1 >= 0
+    </update>
+
+    <update id="addVisitsAmount">
+        update guess set visits = IFNULL(visits,0) + #{addNum}
+        where id = #{guessId}
+    </update>
+
+    <update id="addBetUserCount">
+        update guess set bet_user_count = IFNULL(bet_user_count,0) + 1
+        where id = #{guessId}
+    </update>
+</mapper>

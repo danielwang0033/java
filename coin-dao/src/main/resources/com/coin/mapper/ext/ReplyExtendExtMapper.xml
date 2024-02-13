@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coin.mapper.ext.ReplyExtendExtMapper">
+
+    <select id="selectThreadReplyList" resultType="com.coin.resp.reply.ReplyVo">
+        select
+        a.id,
+        a.thread_id as towerId,
+        a.user_id as userId,
+        a.content,
+        a.pics,
+        a.created_at as createdAt,
+        b.name as userName,
+        b.avatar as userAvatar,
+        b.exp
+        from thread_reply a left join users b on a.user_id = b.id
+        where a.thread_id = #{towerId}
+        and a.deleted_at is null
+    </select>
+
+    <select id="selectReportReplyList" resultType="com.coin.resp.reply.ReplyVo">
+        select
+        a.id,
+        a.report_id as towerId,
+        a.user_id as userId,
+        a.content,
+        a.created_at as createdAt,
+        b.name as userName,
+        b.avatar as userAvatar,
+        b.exp
+        from report_reply a left join users b on a.user_id = b.id
+        where a.report_id = #{towerId}
+        and a.deleted_at is null
+    </select>
+
+    <select id="selectAritcleReplyList" resultType="com.coin.resp.reply.ReplyVo">
+        select
+        a.id,
+        a.article_id as towerId,
+        a.user_id as userId,
+        a.content,
+        a.created_at as createdAt,
+        b.name as userName,
+        b.avatar as userAvatar,
+        b.exp
+        from article_comments a left join users b on a.user_id = b.id
+        where a.article_id = #{towerId}
+    </select>
+
+    <select id="selectGuessReplyList" resultType="com.coin.resp.reply.ReplyVo">
+        select
+        a.id,
+        a.guess_id as towerId,
+        a.user_id as userId,
+        a.content,
+        a.created_at as createdAt,
+        b.name as userName,
+        b.avatar as userAvatar,
+        b.exp
+        from guess_reply a left join users b on a.user_id = b.id
+        where a.guess_id = #{towerId}
+    </select>
+
+    <select id="selectReplyExtendList" resultType="com.coin.resp.reply.ReplyExtendVo">
+        select
+        a.id as id,
+        a.tower_type as towerType,
+        a.floor_id as floorId,
+        a.parent_id as parentId,
+        c.user_id as parentUserId,
+        a.user_id as userId,
+        a.tower_owner_flag as towerOwnerFlag,
+        a.floor_owner_flag as floorOwnerFlag,
+        a.content as content,
+        a.created_at as createdAt,
+        <if test="towerType != null and towerType == 1 ">
+            b.avatar as userAvatar,
+        </if>
+        b.name as userName
+        from reply_extend as a
+        left join users as b on a.user_id = b.id
+        left join reply_extend as c on a.parent_id = c.id
+        where a.tower_id = #{towerId}
+        and a.tower_type = #{towerType}
+        and a.deleted_at is null
+        and a.floor_id in
+        <foreach collection="floorIdList" item="value" separator="," open="(" close=")">
+            #{value}
+        </foreach>
+    </select>
+</mapper>

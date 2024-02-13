@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coin.mapper.ext.GuessItemExtMapper">
+
+    <select id="guessItemList" resultType="com.coin.resp.guess.GuessItemVo">
+        select
+        id,
+        guess_id as guessId,
+        item_name as itemName,
+        item_odds as itemOdds,
+        bet_user_count as betUserCount,
+        settle_pattern as settlePattern,
+        settle_status as settleStatus
+        from guess_item
+        where guess_id = #{guessId}
+        <if test="status != null ">
+            and item_status = #{status}
+        </if>
+    </select>
+
+    <update id="addBetUserCount">
+        update guess_item set bet_user_count = IFNULL(bet_user_count,0)  + 1
+        where id = #{guessItemId}
+    </update>
+</mapper>

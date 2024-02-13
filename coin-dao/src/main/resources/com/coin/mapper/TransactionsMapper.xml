@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coin.mapper.TransactionsMapper">
+  <resultMap id="BaseResultMap" type="com.coin.entity.Transactions">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="payable_type" jdbcType="VARCHAR" property="payableType" />
+    <result column="payable_id" jdbcType="BIGINT" property="payableId" />
+    <result column="wallet_id" jdbcType="BIGINT" property="walletId" />
+    <result column="type" jdbcType="CHAR" property="type" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="confirmed" jdbcType="BIT" property="confirmed" />
+    <result column="meta" jdbcType="VARCHAR" property="meta" />
+    <result column="uuid" jdbcType="CHAR" property="uuid" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, payable_type, payable_id, wallet_id, type, amount, confirmed, meta, uuid, created_at, 
+    updated_at
+  </sql>
+  <select id="selectByExample" parameterType="com.coin.entity.TransactionsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from transactions
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from transactions
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from transactions
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.coin.entity.TransactionsExample">
+    delete from transactions
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.coin.entity.Transactions">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into transactions (payable_type, payable_id, wallet_id, 
+      type, amount, confirmed, meta, 
+      uuid, created_at, updated_at
+      )
+    values (#{payableType,jdbcType=VARCHAR}, #{payableId,jdbcType=BIGINT}, #{walletId,jdbcType=BIGINT}, 
+      #{type,jdbcType=CHAR}, #{amount,jdbcType=DECIMAL}, #{confirmed,jdbcType=BIT}, #{meta,jdbcType=VARCHAR}, 
+      #{uuid,jdbcType=CHAR}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.coin.entity.Transactions">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into transactions
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="payableType != null">
+        payable_type,
+      </if>
+      <if test="payableId != null">
+        payable_id,
+      </if>
+      <if test="walletId != null">
+        wallet_id,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="confirmed != null">
+        confirmed,
+      </if>
+      <if test="meta != null">
+        meta,
+      </if>
+      <if test="uuid != null">
+        uuid,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="payableType != null">
+        #{payableType,jdbcType=VARCHAR},
+      </if>
+      <if test="payableId != null">
+        #{payableId,jdbcType=BIGINT},
+      </if>
+      <if test="walletId != null">
+        #{walletId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=CHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="confirmed != null">
+        #{confirmed,jdbcType=BIT},
+      </if>
+      <if test="meta != null">
+        #{meta,jdbcType=VARCHAR},
+      </if>
+      <if test="uuid != null">
+        #{uuid,jdbcType=CHAR},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.coin.entity.TransactionsExample" resultType="java.lang.Long">
+    select count(*) from transactions
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update transactions
+    <set>
+      <if test="row.id != null">
+        id = #{row.id,jdbcType=BIGINT},
+      </if>
+      <if test="row.payableType != null">
+        payable_type = #{row.payableType,jdbcType=VARCHAR},
+      </if>
+      <if test="row.payableId != null">
+        payable_id = #{row.payableId,jdbcType=BIGINT},
+      </if>
+      <if test="row.walletId != null">
+        wallet_id = #{row.walletId,jdbcType=BIGINT},
+      </if>
+      <if test="row.type != null">
+        type = #{row.type,jdbcType=CHAR},
+      </if>
+      <if test="row.amount != null">
+        amount = #{row.amount,jdbcType=DECIMAL},
+      </if>
+      <if test="row.confirmed != null">
+        confirmed = #{row.confirmed,jdbcType=BIT},
+      </if>
+      <if test="row.meta != null">
+        meta = #{row.meta,jdbcType=VARCHAR},
+      </if>
+      <if test="row.uuid != null">
+        uuid = #{row.uuid,jdbcType=CHAR},
+      </if>
+      <if test="row.createdAt != null">
+        created_at = #{row.createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.updatedAt != null">
+        updated_at = #{row.updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update transactions
+    set id = #{row.id,jdbcType=BIGINT},
+      payable_type = #{row.payableType,jdbcType=VARCHAR},
+      payable_id = #{row.payableId,jdbcType=BIGINT},
+      wallet_id = #{row.walletId,jdbcType=BIGINT},
+      type = #{row.type,jdbcType=CHAR},
+      amount = #{row.amount,jdbcType=DECIMAL},
+      confirmed = #{row.confirmed,jdbcType=BIT},
+      meta = #{row.meta,jdbcType=VARCHAR},
+      uuid = #{row.uuid,jdbcType=CHAR},
+      created_at = #{row.createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{row.updatedAt,jdbcType=TIMESTAMP}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.coin.entity.Transactions">
+    update transactions
+    <set>
+      <if test="payableType != null">
+        payable_type = #{payableType,jdbcType=VARCHAR},
+      </if>
+      <if test="payableId != null">
+        payable_id = #{payableId,jdbcType=BIGINT},
+      </if>
+      <if test="walletId != null">
+        wallet_id = #{walletId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=CHAR},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="confirmed != null">
+        confirmed = #{confirmed,jdbcType=BIT},
+      </if>
+      <if test="meta != null">
+        meta = #{meta,jdbcType=VARCHAR},
+      </if>
+      <if test="uuid != null">
+        uuid = #{uuid,jdbcType=CHAR},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.coin.entity.Transactions">
+    update transactions
+    set payable_type = #{payableType,jdbcType=VARCHAR},
+      payable_id = #{payableId,jdbcType=BIGINT},
+      wallet_id = #{walletId,jdbcType=BIGINT},
+      type = #{type,jdbcType=CHAR},
+      amount = #{amount,jdbcType=DECIMAL},
+      confirmed = #{confirmed,jdbcType=BIT},
+      meta = #{meta,jdbcType=VARCHAR},
+      uuid = #{uuid,jdbcType=CHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

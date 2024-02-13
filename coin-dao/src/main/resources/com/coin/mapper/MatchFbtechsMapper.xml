@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coin.mapper.MatchFbtechsMapper">
+  <resultMap id="BaseResultMap" type="com.coin.entity.MatchFbtechs">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="homeId" jdbcType="INTEGER" property="homeid" />
+    <result column="homeCorner" jdbcType="TINYINT" property="homecorner" />
+    <result column="homeRed" jdbcType="TINYINT" property="homered" />
+    <result column="homeYellow" jdbcType="TINYINT" property="homeyellow" />
+    <result column="homeBallRate" jdbcType="VARCHAR" property="homeballrate" />
+    <result column="homeAttack" jdbcType="INTEGER" property="homeattack" />
+    <result column="homeDangerAttack" jdbcType="INTEGER" property="homedangerattack" />
+    <result column="homeShoot" jdbcType="INTEGER" property="homeshoot" />
+    <result column="homeShootOn" jdbcType="INTEGER" property="homeshooton" />
+    <result column="awayId" jdbcType="INTEGER" property="awayid" />
+    <result column="awayCorner" jdbcType="INTEGER" property="awaycorner" />
+    <result column="awayRed" jdbcType="INTEGER" property="awayred" />
+    <result column="awayYellow" jdbcType="INTEGER" property="awayyellow" />
+    <result column="awayBallRate" jdbcType="VARCHAR" property="awayballrate" />
+    <result column="awayAttack" jdbcType="INTEGER" property="awayattack" />
+    <result column="awayDangerAttack" jdbcType="INTEGER" property="awaydangerattack" />
+    <result column="awayShoot" jdbcType="INTEGER" property="awayshoot" />
+    <result column="awayShootOn" jdbcType="INTEGER" property="awayshooton" />
+    <result column="matchId" jdbcType="INTEGER" property="matchid" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, homeId, homeCorner, homeRed, homeYellow, homeBallRate, homeAttack, homeDangerAttack, 
+    homeShoot, homeShootOn, awayId, awayCorner, awayRed, awayYellow, awayBallRate, awayAttack, 
+    awayDangerAttack, awayShoot, awayShootOn, matchId, updated_at, created_at
+  </sql>
+  <select id="selectByExample" parameterType="com.coin.entity.MatchFbtechsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from match_fbtechs
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from match_fbtechs
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from match_fbtechs
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.coin.entity.MatchFbtechsExample">
+    delete from match_fbtechs
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.coin.entity.MatchFbtechs">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into match_fbtechs (homeId, homeCorner, homeRed, 
+      homeYellow, homeBallRate, homeAttack, 
+      homeDangerAttack, homeShoot, homeShootOn, 
+      awayId, awayCorner, awayRed, 
+      awayYellow, awayBallRate, awayAttack, 
+      awayDangerAttack, awayShoot, awayShootOn, 
+      matchId, updated_at, created_at
+      )
+    values (#{homeid,jdbcType=INTEGER}, #{homecorner,jdbcType=TINYINT}, #{homered,jdbcType=TINYINT}, 
+      #{homeyellow,jdbcType=TINYINT}, #{homeballrate,jdbcType=VARCHAR}, #{homeattack,jdbcType=INTEGER}, 
+      #{homedangerattack,jdbcType=INTEGER}, #{homeshoot,jdbcType=INTEGER}, #{homeshooton,jdbcType=INTEGER}, 
+      #{awayid,jdbcType=INTEGER}, #{awaycorner,jdbcType=INTEGER}, #{awayred,jdbcType=INTEGER}, 
+      #{awayyellow,jdbcType=INTEGER}, #{awayballrate,jdbcType=VARCHAR}, #{awayattack,jdbcType=INTEGER}, 
+      #{awaydangerattack,jdbcType=INTEGER}, #{awayshoot,jdbcType=INTEGER}, #{awayshooton,jdbcType=INTEGER}, 
+      #{matchid,jdbcType=INTEGER}, #{updatedAt,jdbcType=TIMESTAMP}, #{createdAt,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.coin.entity.MatchFbtechs">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into match_fbtechs
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="homeid != null">
+        homeId,
+      </if>
+      <if test="homecorner != null">
+        homeCorner,
+      </if>
+      <if test="homered != null">
+        homeRed,
+      </if>
+      <if test="homeyellow != null">
+        homeYellow,
+      </if>
+      <if test="homeballrate != null">
+        homeBallRate,
+      </if>
+      <if test="homeattack != null">
+        homeAttack,
+      </if>
+      <if test="homedangerattack != null">
+        homeDangerAttack,
+      </if>
+      <if test="homeshoot != null">
+        homeShoot,
+      </if>
+      <if test="homeshooton != null">
+        homeShootOn,
+      </if>
+      <if test="awayid != null">
+        awayId,
+      </if>
+      <if test="awaycorner != null">
+        awayCorner,
+      </if>
+      <if test="awayred != null">
+        awayRed,
+      </if>
+      <if test="awayyellow != null">
+        awayYellow,
+      </if>
+      <if test="awayballrate != null">
+        awayBallRate,
+      </if>
+      <if test="awayattack != null">
+        awayAttack,
+      </if>
+      <if test="awaydangerattack != null">
+        awayDangerAttack,
+      </if>
+      <if test="awayshoot != null">
+        awayShoot,
+      </if>
+      <if test="awayshooton != null">
+        awayShootOn,
+      </if>
+      <if test="matchid != null">
+        matchId,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="homeid != null">
+        #{homeid,jdbcType=INTEGER},
+      </if>
+      <if test="homecorner != null">
+        #{homecorner,jdbcType=TINYINT},
+      </if>
+      <if test="homered != null">
+        #{homered,jdbcType=TINYINT},
+      </if>
+      <if test="homeyellow != null">
+        #{homeyellow,jdbcType=TINYINT},
+      </if>
+      <if test="homeballrate != null">
+        #{homeballrate,jdbcType=VARCHAR},
+      </if>
+      <if test="homeattack != null">
+        #{homeattack,jdbcType=INTEGER},
+      </if>
+      <if test="homedangerattack != null">
+        #{homedangerattack,jdbcType=INTEGER},
+      </if>
+      <if test="homeshoot != null">
+        #{homeshoot,jdbcType=INTEGER},
+      </if>
+      <if test="homeshooton != null">
+        #{homeshooton,jdbcType=INTEGER},
+      </if>
+      <if test="awayid != null">
+        #{awayid,jdbcType=INTEGER},
+      </if>
+      <if test="awaycorner != null">
+        #{awaycorner,jdbcType=INTEGER},
+      </if>
+      <if test="awayred != null">
+        #{awayred,jdbcType=INTEGER},
+      </if>
+      <if test="awayyellow != null">
+        #{awayyellow,jdbcType=INTEGER},
+      </if>
+      <if test="awayballrate != null">
+        #{awayballrate,jdbcType=VARCHAR},
+      </if>
+      <if test="awayattack != null">
+        #{awayattack,jdbcType=INTEGER},
+      </if>
+      <if test="awaydangerattack != null">
+        #{awaydangerattack,jdbcType=INTEGER},
+      </if>
+      <if test="awayshoot != null">
+        #{awayshoot,jdbcType=INTEGER},
+      </if>
+      <if test="awayshooton != null">
+        #{awayshooton,jdbcType=INTEGER},
+      </if>
+      <if test="matchid != null">
+        #{matchid,jdbcType=INTEGER},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.coin.entity.MatchFbtechsExample" resultType="java.lang.Long">
+    select count(*) from match_fbtechs
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update match_fbtechs
+    <set>
+      <if test="row.id != null">
+        id = #{row.id,jdbcType=INTEGER},
+      </if>
+      <if test="row.homeid != null">
+        homeId = #{row.homeid,jdbcType=INTEGER},
+      </if>
+      <if test="row.homecorner != null">
+        homeCorner = #{row.homecorner,jdbcType=TINYINT},
+      </if>
+      <if test="row.homered != null">
+        homeRed = #{row.homered,jdbcType=TINYINT},
+      </if>
+      <if test="row.homeyellow != null">
+        homeYellow = #{row.homeyellow,jdbcType=TINYINT},
+      </if>
+      <if test="row.homeballrate != null">
+        homeBallRate = #{row.homeballrate,jdbcType=VARCHAR},
+      </if>
+      <if test="row.homeattack != null">
+        homeAttack = #{row.homeattack,jdbcType=INTEGER},
+      </if>
+      <if test="row.homedangerattack != null">
+        homeDangerAttack = #{row.homedangerattack,jdbcType=INTEGER},
+      </if>
+      <if test="row.homeshoot != null">
+        homeShoot = #{row.homeshoot,jdbcType=INTEGER},
+      </if>
+      <if test="row.homeshooton != null">
+        homeShootOn = #{row.homeshooton,jdbcType=INTEGER},
+      </if>
+      <if test="row.awayid != null">
+        awayId = #{row.awayid,jdbcType=INTEGER},
+      </if>
+      <if test="row.awaycorner != null">
+        awayCorner = #{row.awaycorner,jdbcType=INTEGER},
+      </if>
+      <if test="row.awayred != null">
+        awayRed = #{row.awayred,jdbcType=INTEGER},
+      </if>
+      <if test="row.awayyellow != null">
+        awayYellow = #{row.awayyellow,jdbcType=INTEGER},
+      </if>
+      <if test="row.awayballrate != null">
+        awayBallRate = #{row.awayballrate,jdbcType=VARCHAR},
+      </if>
+      <if test="row.awayattack != null">
+        awayAttack = #{row.awayattack,jdbcType=INTEGER},
+      </if>
+      <if test="row.awaydangerattack != null">
+        awayDangerAttack = #{row.awaydangerattack,jdbcType=INTEGER},
+      </if>
+      <if test="row.awayshoot != null">
+        awayShoot = #{row.awayshoot,jdbcType=INTEGER},
+      </if>
+      <if test="row.awayshooton != null">
+        awayShootOn = #{row.awayshooton,jdbcType=INTEGER},
+      </if>
+      <if test="row.matchid != null">
+        matchId = #{row.matchid,jdbcType=INTEGER},
+      </if>
+      <if test="row.updatedAt != null">
+        updated_at = #{row.updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.createdAt != null">
+        created_at = #{row.createdAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update match_fbtechs
+    set id = #{row.id,jdbcType=INTEGER},
+      homeId = #{row.homeid,jdbcType=INTEGER},
+      homeCorner = #{row.homecorner,jdbcType=TINYINT},
+      homeRed = #{row.homered,jdbcType=TINYINT},
+      homeYellow = #{row.homeyellow,jdbcType=TINYINT},
+      homeBallRate = #{row.homeballrate,jdbcType=VARCHAR},
+      homeAttack = #{row.homeattack,jdbcType=INTEGER},
+      homeDangerAttack = #{row.homedangerattack,jdbcType=INTEGER},
+      homeShoot = #{row.homeshoot,jdbcType=INTEGER},
+      homeShootOn = #{row.homeshooton,jdbcType=INTEGER},
+      awayId = #{row.awayid,jdbcType=INTEGER},
+      awayCorner = #{row.awaycorner,jdbcType=INTEGER},
+      awayRed = #{row.awayred,jdbcType=INTEGER},
+      awayYellow = #{row.awayyellow,jdbcType=INTEGER},
+      awayBallRate = #{row.awayballrate,jdbcType=VARCHAR},
+      awayAttack = #{row.awayattack,jdbcType=INTEGER},
+      awayDangerAttack = #{row.awaydangerattack,jdbcType=INTEGER},
+      awayShoot = #{row.awayshoot,jdbcType=INTEGER},
+      awayShootOn = #{row.awayshooton,jdbcType=INTEGER},
+      matchId = #{row.matchid,jdbcType=INTEGER},
+      updated_at = #{row.updatedAt,jdbcType=TIMESTAMP},
+      created_at = #{row.createdAt,jdbcType=TIMESTAMP}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.coin.entity.MatchFbtechs">
+    update match_fbtechs
+    <set>
+      <if test="homeid != null">
+        homeId = #{homeid,jdbcType=INTEGER},
+      </if>
+      <if test="homecorner != null">
+        homeCorner = #{homecorner,jdbcType=TINYINT},
+      </if>
+      <if test="homered != null">
+        homeRed = #{homered,jdbcType=TINYINT},
+      </if>
+      <if test="homeyellow != null">
+        homeYellow = #{homeyellow,jdbcType=TINYINT},
+      </if>
+      <if test="homeballrate != null">
+        homeBallRate = #{homeballrate,jdbcType=VARCHAR},
+      </if>
+      <if test="homeattack != null">
+        homeAttack = #{homeattack,jdbcType=INTEGER},
+      </if>
+      <if test="homedangerattack != null">
+        homeDangerAttack = #{homedangerattack,jdbcType=INTEGER},
+      </if>
+      <if test="homeshoot != null">
+        homeShoot = #{homeshoot,jdbcType=INTEGER},
+      </if>
+      <if test="homeshooton != null">
+        homeShootOn = #{homeshooton,jdbcType=INTEGER},
+      </if>
+      <if test="awayid != null">
+        awayId = #{awayid,jdbcType=INTEGER},
+      </if>
+      <if test="awaycorner != null">
+        awayCorner = #{awaycorner,jdbcType=INTEGER},
+      </if>
+      <if test="awayred != null">
+        awayRed = #{awayred,jdbcType=INTEGER},
+      </if>
+      <if test="awayyellow != null">
+        awayYellow = #{awayyellow,jdbcType=INTEGER},
+      </if>
+      <if test="awayballrate != null">
+        awayBallRate = #{awayballrate,jdbcType=VARCHAR},
+      </if>
+      <if test="awayattack != null">
+        awayAttack = #{awayattack,jdbcType=INTEGER},
+      </if>
+      <if test="awaydangerattack != null">
+        awayDangerAttack = #{awaydangerattack,jdbcType=INTEGER},
+      </if>
+      <if test="awayshoot != null">
+        awayShoot = #{awayshoot,jdbcType=INTEGER},
+      </if>
+      <if test="awayshooton != null">
+        awayShootOn = #{awayshooton,jdbcType=INTEGER},
+      </if>
+      <if test="matchid != null">
+        matchId = #{matchid,jdbcType=INTEGER},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.coin.entity.MatchFbtechs">
+    update match_fbtechs
+    set homeId = #{homeid,jdbcType=INTEGER},
+      homeCorner = #{homecorner,jdbcType=TINYINT},
+      homeRed = #{homered,jdbcType=TINYINT},
+      homeYellow = #{homeyellow,jdbcType=TINYINT},
+      homeBallRate = #{homeballrate,jdbcType=VARCHAR},
+      homeAttack = #{homeattack,jdbcType=INTEGER},
+      homeDangerAttack = #{homedangerattack,jdbcType=INTEGER},
+      homeShoot = #{homeshoot,jdbcType=INTEGER},
+      homeShootOn = #{homeshooton,jdbcType=INTEGER},
+      awayId = #{awayid,jdbcType=INTEGER},
+      awayCorner = #{awaycorner,jdbcType=INTEGER},
+      awayRed = #{awayred,jdbcType=INTEGER},
+      awayYellow = #{awayyellow,jdbcType=INTEGER},
+      awayBallRate = #{awayballrate,jdbcType=VARCHAR},
+      awayAttack = #{awayattack,jdbcType=INTEGER},
+      awayDangerAttack = #{awaydangerattack,jdbcType=INTEGER},
+      awayShoot = #{awayshoot,jdbcType=INTEGER},
+      awayShootOn = #{awayshooton,jdbcType=INTEGER},
+      matchId = #{matchid,jdbcType=INTEGER},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      created_at = #{createdAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

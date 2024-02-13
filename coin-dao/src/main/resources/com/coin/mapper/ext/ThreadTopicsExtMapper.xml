@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coin.mapper.ext.ThreadTopicsExtMapper">
+
+  <update id="updateBatchReadCount" parameterType="map">
+    update thread_topics join
+    (select topic_id,COALESCE(SUM(read_count), 0) as total_read_count from threads group by topic_id) as subquery
+    on subquery.topic_id=thread_topics.id
+    set read_count = subquery.total_read_count
+  </update>
+</mapper>

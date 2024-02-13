@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coin.mapper.TDictI18nMapper">
+  <resultMap id="BaseResultMap" type="com.coin.entity.TDictI18n">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="language" jdbcType="VARCHAR" property="language" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="zh_code" jdbcType="VARCHAR" property="zhCode" />
+    <result column="translation" jdbcType="VARCHAR" property="translation" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, `language`, `type`, zh_code, `translation`, `status`, create_date
+  </sql>
+  <select id="selectByExample" parameterType="com.coin.entity.TDictI18nExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_dict_i18n
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_dict_i18n
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_dict_i18n
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.coin.entity.TDictI18nExample">
+    delete from t_dict_i18n
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.coin.entity.TDictI18n">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_dict_i18n (`language`, `type`, zh_code, 
+      `translation`, `status`, create_date
+      )
+    values (#{language,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{zhCode,jdbcType=VARCHAR}, 
+      #{translation,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.coin.entity.TDictI18n">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_dict_i18n
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="language != null">
+        `language`,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="zhCode != null">
+        zh_code,
+      </if>
+      <if test="translation != null">
+        `translation`,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="language != null">
+        #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="zhCode != null">
+        #{zhCode,jdbcType=VARCHAR},
+      </if>
+      <if test="translation != null">
+        #{translation,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.coin.entity.TDictI18nExample" resultType="java.lang.Long">
+    select count(*) from t_dict_i18n
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_dict_i18n
+    <set>
+      <if test="row.id != null">
+        id = #{row.id,jdbcType=BIGINT},
+      </if>
+      <if test="row.language != null">
+        `language` = #{row.language,jdbcType=VARCHAR},
+      </if>
+      <if test="row.type != null">
+        `type` = #{row.type,jdbcType=INTEGER},
+      </if>
+      <if test="row.zhCode != null">
+        zh_code = #{row.zhCode,jdbcType=VARCHAR},
+      </if>
+      <if test="row.translation != null">
+        `translation` = #{row.translation,jdbcType=VARCHAR},
+      </if>
+      <if test="row.status != null">
+        `status` = #{row.status,jdbcType=INTEGER},
+      </if>
+      <if test="row.createDate != null">
+        create_date = #{row.createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_dict_i18n
+    set id = #{row.id,jdbcType=BIGINT},
+      `language` = #{row.language,jdbcType=VARCHAR},
+      `type` = #{row.type,jdbcType=INTEGER},
+      zh_code = #{row.zhCode,jdbcType=VARCHAR},
+      `translation` = #{row.translation,jdbcType=VARCHAR},
+      `status` = #{row.status,jdbcType=INTEGER},
+      create_date = #{row.createDate,jdbcType=TIMESTAMP}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.coin.entity.TDictI18n">
+    update t_dict_i18n
+    <set>
+      <if test="language != null">
+        `language` = #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="zhCode != null">
+        zh_code = #{zhCode,jdbcType=VARCHAR},
+      </if>
+      <if test="translation != null">
+        `translation` = #{translation,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.coin.entity.TDictI18n">
+    update t_dict_i18n
+    set `language` = #{language,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=INTEGER},
+      zh_code = #{zhCode,jdbcType=VARCHAR},
+      `translation` = #{translation,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

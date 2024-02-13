@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coin.mapper.ext.FollowablesExtMapper">
+
+    <select id="checkFollow" resultType="com.coin.entity.Followables">
+        select id
+        from followables
+        where user_id = #{aUserId}
+        and followable_id = #{bUserId}
+        and followable_type = 'App\\Models\\User'
+        limit 1
+    </select>
+
+    <select id="checkAFollowBList" resultType="java.lang.Long">
+        select followable_id
+        from followables
+        where user_id = #{aUserId}
+        and followable_type = 'App\\Models\\User'
+        and followable_id in
+        <foreach close=")" collection="bUserList" item="listItem" open="(" separator=",">
+            #{listItem}
+        </foreach>
+        group by followable_id
+    </select>
+
+    <select id="countFollowerByUserId" resultType="java.lang.Long">
+        select count(id)
+        from followables
+        where
+        followable_id = #{userId}
+        and followable_type = 'App\\Models\\User'
+    </select>
+
+    <select id="countFollowerByUserIdList" resultType="com.coin.resp.user.UserFollowerCountVo">
+        select followable_id as userId, count(id) as count
+        from followables
+        where followable_type = 'App\\Models\\User'
+        and followable_id in
+        <foreach close=")" collection="userIdList" item="listItem" open="(" separator=",">
+            #{listItem}
+        </foreach>
+        group by followable_id
+    </select>
+
+    <select id="countFolloweeByUserId" resultType="java.lang.Long">
+        select count(id)
+        from followables
+        where
+        user_id = #{userId}
+        and followable_type = 'App\\Models\\User'
+    </select>
+
+    <select id="countFolloweeByUserIdList" resultType="com.coin.resp.user.UserFolloweeCountVo">
+        select user_id as userId, count(id) as count
+        from followables
+        where followable_type = 'App\\Models\\User'
+        and user_id in
+        <foreach close=")" collection="userIdList" item="listItem" open="(" separator=",">
+            #{listItem}
+        </foreach>
+        group by user_id
+    </select>
+</mapper>

@@ -1,0 +1,22 @@
+spring:
+  profiles:
+    active: @env@
+  mvc:
+    static-path-pattern: /static/**
+  thymeleaf:
+    prefix: classpath:/templates/
+mybatis:
+  mapper-locations: classpath*:com/coin/mapper/*.xml,classpath*:com/coin/mapper/dao/*.xml
+  type-aliases-package: com.coin.entity
+pagehelper:
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countsql
+  auto-dialect: mysql
+ok:
+  http:
+    connect-timeout: 3
+    read-timeout: 8
+    write-timeout: 8
+    keep-alive-duration: 60
+    max-idle-connections: 20

@@ -1,0 +1,66 @@
+server:
+  port: 8998
+spring:
+  datasource:
+    username: root
+    password: barplus03582
+    url: jdbc:mysql://35.220.201.241:3306/INT_bmw?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8&allowMultiQueries=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 50
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 51MB
+  jackson:
+    time-zone: GMT+8
+  redis:
+    database: 1
+    host: 127.0.0.1
+    port: 6379
+    password: barplus
+    timeout: 1000
+    jedis:
+      pool:
+        max-active: 20
+        max-wait: 2
+        max-idle: 0
+        min-idle: 0
+io:
+  url:  http://35.220.201.241:9900/
+  accessKey:  eson
+  secretKey:  sa123456
+  bucket: bomin
+  domain: https://待配置/
+log:
+  path: /Users/jiffnio/04_support/int_logs
+
+chat:
+  rcInstance: https://chat.bggsdght.xyz/
+  rcRestUrl:  https://chat.bggsdght.xyz/api/v1/
+  rcWsUrl:  wss://chat.bggsdght.xyz/websocket
+  rcAdminId:  DymL7kvaM26Eg2PgB
+  rcAdminToken: Ue6tB_q6BSvuYWFh6Ax98N5Vc6LiJzm_-zGne0N0OkP
+  rcRid:  64b51bdc451db70350d0c82e
+sport:
+  sportDomain: https://api.365live88.com
+  sportKey: SLOCdJ491hkUB2wt9Y9WDCQ9cvDfN0hk
+  sportTkey: OdgccnAToLTniy4G39QMzDJ28IGX1dqn
+
+  sportStreamAk: 1TsgozPY1DSCvjgMmgoP1BRNO6SbZEwf
+  sportStreamSk: Puq7rtCBpKU7gCKs3SskgvAvcKQEytoj
+  sportStreamDomain: https://live.henglongblg.com
+
+  sportStreamKey: 364c23e78073b2cce73aee4a81f9df5a
+  sportStreamAppname: live
+
+mail:
+  username: api
+  password: af5a2c2965fabb1dab16a4223c53fca8-c30053db-103b4faa
+  domain: mail.bggsdght.xyz
+  url: https://api.mailgun.net/v3/${mail.domain}/messages
+  from : support@bominwang.com
+i18n:
+  enable: true
+  language: vi

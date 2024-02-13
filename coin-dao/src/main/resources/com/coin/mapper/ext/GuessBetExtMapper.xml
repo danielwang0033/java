@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coin.mapper.ext.GuessBetExtMapper">
+
+    <select id="betUserList" resultType="com.coin.resp.guess.BetUserVo">
+        select
+        id,
+        user_id as userId,
+        user_name as userName,
+        guess_item_name as guessItemName,
+        bet_amount as betAmount,
+        settle_status as settleStatus,
+        settle_pattern as settlePattern,
+        created_at as createdAt,
+        bet_odds as betOdds,
+        settle_amount as settleAmount,
+        award_amount as awardAmount
+        from guess_bet
+        where guess_id = #{req.guessId}
+        <if test="req.type != null and req.type == 2">
+            and user_id = #{req.loginUserId}
+        </if>
+        <if test="req.guessItemId != null ">
+            and guess_item_id = #{req.guessItemId}
+        </if>
+        order by id desc
+    </select>
+
+    <select id="myBetList" resultType="com.coin.resp.guess.MyBetListVo">
+        select
+        a.id,
+        a.user_id as userId,
+        a.user_name as userName,
+        a.guess_item_name as guessItemName,
+        a.bet_amount as betAmount,
+        a.settle_status as settleStatus,
+        a.settle_pattern as settlePattern,
+        a.created_at as createdAt,
+        a.bet_odds as betOdds,
+        a.settle_amount as settleAmount,
+        a.award_amount as awardAmount,
+        b.title as guessTitle
+        from guess_bet a left join guess b on a.guess_id = b.id
+        where
+        a.user_id = #{req.loginUserId}
+        order by a.id desc
+    </select>
+
+    <select id="betResultList" resultType="com.coin.resp.guess.BetResultVo">
+        select
+        id,
+        user_id as userId,
+        user_name as userName,
+        guess_item_name as guessItemName,
+        bet_amount as betAmount,
+        bet_odds as betOdds,
+        award_amount as awardAmount,
+        settle_status as settleStatus,
+        settle_pattern as settlePattern,
+        created_at as createdAt
+        from guess_bet
+        where guess_id = #{req.guessId}
+        <if test="req.adminFlag == 1">
+            and settle_status in (0,1,2,3)
+        </if>
+        <if test="req.adminFlag != 1">
+            and settle_status = 2
+        </if>
+
+        <if test="req.type != null and req.type == 1">
+            and settle_pattern in (1,2)
+        </if>
+        <if test="req.type != null and req.type == 2">
+            and settle_pattern in (3,4)
+        </if>
+        <if test="req.type != null and req.type == 3">
+            and user_id =#{req.loginUserId}
+        </if>
+        <if test="req.type != null and req.type == 4">
+            and settle_pattern in (1,2,3,4,5)
+        </if>
+        order by id desc
+    </select>
+
+    <select id="historyBet" resultType="java.lang.Long">
+        select
+        id
+        from guess_bet
+        where guess_id = #{guessId}
+        and user_id = #{userId}
+        <if test="guessItemId != null">
+            and guess_item_id = #{guessItemId}
+        </if>
+        limit 1
+    </select>
+</mapper>

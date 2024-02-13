@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coin.mapper.ext.MatchsExtMapper">
+
+    <insert id="insertBatch" >
+        insert into matchs (matchId, gameType, matchTime,
+        leagueId, leagueName, leagueLogo,
+        statusId, `status`, playing,
+        videos, thirdId, lineUp,
+        publish, created_at, updated_at,
+        rid, isHome, sort,
+        video_url, streamId, streamName
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+        (
+            #{item.matchid,jdbcType=VARCHAR}, #{item.gametype,jdbcType=INTEGER}, #{item.matchtime,jdbcType=INTEGER},
+            #{item.leagueid,jdbcType=VARCHAR}, #{item.leaguename,jdbcType=VARCHAR}, #{item.leaguelogo,jdbcType=VARCHAR},
+            #{item.statusid,jdbcType=INTEGER}, #{item.status,jdbcType=VARCHAR}, #{item.playing,jdbcType=TINYINT},
+            #{item.videos,jdbcType=VARCHAR}, #{item.thirdid,jdbcType=VARCHAR}, #{item.lineup,jdbcType=TINYINT},
+            #{item.publish,jdbcType=INTEGER}, #{item.createdAt,jdbcType=TIMESTAMP}, #{item.updatedAt,jdbcType=TIMESTAMP},
+            #{item.rid,jdbcType=VARCHAR}, #{item.ishome,jdbcType=INTEGER}, #{item.sort,jdbcType=INTEGER},
+            #{item.videoUrl,jdbcType=VARCHAR}, #{item.streamid,jdbcType=INTEGER}, #{item.streamname,jdbcType=VARCHAR}
+        )
+        </foreach>
+    </insert>
+
+    <update id="updateBatch">
+        <foreach collection="list" item="item" index="index" separator=",">
+        update matchs set ( pushing = #{item.matchid,jdbcType=VARCHAR} where matchId="")
+        </foreach>
+    </update>
+
+    <select id="selectMatchIdAndStatusId" resultType="com.coin.resp.match.MatchIdAndStatusVo">
+        select
+        matchId,
+        statusId,
+        sort,
+        video_url as videoUrl,
+        streamName,
+        rid,
+        publish,
+        playing
+        from matchs
+    </select>
+
+    <select id="selectLeague" resultType="com.coin.resp.LeaguesResp">
+        select
+        leagueId,
+        leagueName,
+        leagueLogo
+        from matchs
+        where publish=1 and statusId!=-1 group by leagueId
+    </select>
+
+    <delete id="deleteNoFinished">
+        delete from matchs
+        where statusId != -1
+    </delete>
+
+<!--
+    //"playing": 1,       //有推流
+    //"starting": 1,      //未完成的比赛
+    // "gameType":5,
+    //"statusId":0,
+    "publish": 1,       //1已发布  0未发布
+    //"leagueId":"cg8VfGhbxo9ix9i8dg",
+    "sortOther": "matchTime",    //按比赛时间 升序
+    "sortLeague": "leagueId"    //按赛程 升序
+    -->
+    <select id="selectMatchJoinLeague" resultType="com.coin.entity.Matchs">
+        select a.id, matchId, gameType, matchTime, a.leagueId, a.leagueName, a.leagueLogo, statusId, `status`,
+        playing, videos, thirdId, lineUp, publish, a.created_at as createdAt, a.updated_at as updatedAt, rid, isHome, a.sort,
+        video_url as videoUrl, streamId, streamName
+        from matchs as a LEFT JOIN match_leagues as b on a.leagueId=b.league_id
+        WHERE
+        b.sort is not NULL
+        <if test="req.playing != null">
+            and playing = #{req.playing}
+        </if>
+        <if test="req.starting != null and req.starting==1">
+            and statusId not in(0,-1)
+        </if>
+        <if test="req.gameType != null">
+            and gameType = #{req.gameType}
+        </if>
+        <if test="req.statusId != null">
+            and statusId = #{req.statusId}
+        </if>
+        <if test="req.publish != null">
+            and publish = #{req.publish}
+        </if>
+        <if test="req.leagueId != null and req.leagueId!=''">
+            and leagueId = #{req.leagueId}
+        </if>
+        order by a.sort ASC,
+        <if test="req.sortLeague != null and req.sortLeague=='leagueId'">
+            b.sort asc,
+        </if>
+        <if test="req.sortOther != null and req.sortOther=='matchTime'">
+            matchTime asc,
+        </if>
+        id desc
+    </select>
+</mapper>
