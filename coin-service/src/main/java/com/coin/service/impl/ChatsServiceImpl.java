@@ -133,11 +133,11 @@ public class ChatsServiceImpl implements ChatsService {
         headers.put("Content-type", "application/json");
         //发送post请求并接收响应数据
         Map<String, String> param = new HashMap<>();
-        param.put("user", req.getRocketUserName());
+        param.put("username", req.getRocketUserName());
         param.put("password", MD5Util.MD5(String.valueOf(req.getLoginUserId())));
 
         String body = JSONUtil.toJsonStr(param);
-        String http = HttpUtil.createGet(rcRestUrl + "login").addHeaders(headers).body(body).execute().body();
+        String http = HttpUtil.createPost(rcRestUrl + "login").addHeaders(headers).body(body).execute().body();
 
         JSONObject httpJson = JSONUtil.parseObj(http);
         if (!httpJson.getStr("status").equals("success")) {
