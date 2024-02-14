@@ -158,15 +158,32 @@ public class RoomsServiceImpl implements RoomsService {
             JSONObject jsonObject = chatsService.createUser(req);
             //保存，rocketUserId
             JSONObject userJson = jsonObject.getJSONObject("user");
-            user.setRocketUserId(userJson.getStr("_id"));
-            user.setRocketUsername(userJson.getStr("username"));
+            String userJsonId = userJson.getStr("_id");
+            String userJsonName = userJson.getStr("username");
+            user.setRocketUserId(userJsonId);
+            user.setRocketUsername(userJsonName);
             req.setAvatar(user.getAvatar());
             chatsService.setAvatar(req);
+            // 更新用户rocketUserid
+            req.setOptRocketUserId(userJsonId);
+
+            // 更新用户数据
+            Users update = new Users();
+            update.setId(user.getId());
+            update.setRocketUserId(userJsonId);
+            update.setRocketUsername(userJsonName);
+            usersMapper.updateByPrimaryKeySelective(update);
         }
         if (StrUtil.isEmpty(user.getRocketUserLoginToken())) {
             JSONObject loginObject = chatsService.login(req);
-            user.setRocketUserLoginToken(loginObject.getJSONObject("data").getStr("authToken"));
-            usersMapper.updateByPrimaryKeySelective(user);
+            String authToken = loginObject.getJSONObject("data").getStr("authToken");
+            user.setRocketUserLoginToken(authToken);
+
+            // 更新用户数据
+            Users update = new Users();
+            update.setId(user.getId());
+            update.setRocketUserLoginToken(authToken);
+            usersMapper.updateByPrimaryKeySelective(update);
         }
 
         RoomsExample example = new RoomsExample();
