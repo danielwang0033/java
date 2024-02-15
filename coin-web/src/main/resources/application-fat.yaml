@@ -55,7 +55,7 @@ sport:
 
 mail:
   username: api
-  password: af3b4e3a20c98e44c9855d97a7a668e2-8c8e5529-03cf3fae
+  password: d65578a8192e0aa9171447c555af577b
   domain: mail.bggsdght.xyz
   url: https://api.mailgun.net/v3/${mail.domain}/messages
   from : support@bominwang.com
