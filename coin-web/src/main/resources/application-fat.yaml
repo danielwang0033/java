@@ -40,9 +40,9 @@ chat:
   rcInstance: https://chat.bggsdght.xyz/
   rcRestUrl:  https://chat.bggsdght.xyz/api/v1/
   rcWsUrl:  wss://chat.bggsdght.xyz/websocket
-  rcAdminId: 6Whzc7j3WkNegTxgT
-  rcAdminToken: eL3Nk1J-3quC1WL7HB5lhD5tdcJZdSMyM2UMQRj50ml
-  rcRid: 65ca0643fbee39d0830b1b77
+  rcAdminId: PxyBCkScCkSnXfAX4
+  rcAdminToken: 0-qCdEyeS9NGwiw40kZUZXCQjgT-n0-TADdhu6abHhF
+  rcRid: 65cdab23fee2b94b49be94a3
 sport:
   sportDomain: https://api.365live88.com
   sportKey: SLOCdJ491hkUB2wt9Y9WDCQ9cvDfN0hk
