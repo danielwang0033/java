@@ -34,7 +34,7 @@ io:
   bucket: bomin
   domain: https://待配置/
 log:
-  path: /Users/jiffnio/04_support/int_logs
+  path: /ZH_www/java/log/
 
 chat:
   rcInstance: https://chat.bggsdght.xyz/
@@ -47,11 +47,9 @@ sport:
   sportDomain: https://api.365live88.com
   sportKey: SLOCdJ491hkUB2wt9Y9WDCQ9cvDfN0hk
   sportTkey: OdgccnAToLTniy4G39QMzDJ28IGX1dqn
-
   sportStreamAk: 1TsgozPY1DSCvjgMmgoP1BRNO6SbZEwf
   sportStreamSk: Puq7rtCBpKU7gCKs3SskgvAvcKQEytoj
   sportStreamDomain: https://live.henglongblg.com
-
   sportStreamKey: 364c23e78073b2cce73aee4a81f9df5a
   sportStreamAppname: live
 

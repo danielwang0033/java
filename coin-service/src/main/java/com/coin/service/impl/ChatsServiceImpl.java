@@ -179,7 +179,7 @@ public class ChatsServiceImpl implements ChatsService {
         headers.put("Content-type", "application/json");
         req.setRid(rcRid);
         //发送get请求并接收响应数据
-        String http = HttpUtil.createGet(rcRestUrl + "channels.messages?roomId=" + req.getRid() + "&count=" + req.getPagesize() + "&offset=0").addHeaders(headers).execute().body();
+        String http = HttpUtil.createGet(rcRestUrl + "channels.messages?roomId=" + rcRid + "&count=" + req.getPagesize() + "&offset=0").addHeaders(headers).execute().body();
         JSONObject httpJson = JSONUtil.parseObj(http);
         if (httpJson.getBool("success")) {
             return httpJson;
