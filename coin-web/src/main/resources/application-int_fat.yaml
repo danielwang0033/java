@@ -40,9 +40,9 @@ chat:
   rcInstance: https://chat.bggsdght.xyz/
   rcRestUrl: https://chat.bggsdght.xyz/api/v1/
   rcWsUrl: wss://chat.bggsdght.xyz/websocket
-  rcAdminId: DymL7kvaM26Eg2PgB
-  rcAdminToken: Ue6tB_q6BSvuYWFh6Ax98N5Vc6LiJzm_-zGne0N0OkP
-  rcRid: 64b51bdc451db70350d0c82e
+  rcAdminId: PxyBCkScCkSnXfAX4
+  rcAdminToken: 0-qCdEyeS9NGwiw40kZUZXCQjgT-n0-TADdhu6abHhF
+  rcRid: 65cdc371fee2b94b49be9506
 sport:
   sportDomain: https://api.365live88.com
   sportKey: SLOCdJ491hkUB2wt9Y9WDCQ9cvDfN0hk
@@ -55,7 +55,7 @@ sport:
 
 mail:
   username: api
-  password: af5a2c2965fabb1dab16a4223c53fca8-c30053db-103b4faa
+  password: d65578a8192e0aa9171447c555af577b
   domain: mail.bggsdght.xyz
   url: https://api.mailgun.net/v3/${mail.domain}/messages
   from: support@bominwang.com
