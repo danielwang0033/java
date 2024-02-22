@@ -3,8 +3,8 @@ server:
 spring:
   datasource:
     username: root
-    password: QWEasd3358123
-    url: jdbc:mysql://10.170.15.213:3336/bmw?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8&allowMultiQueries=true
+    password: barplus03582
+    url: jdbc:mysql://10.170.15.213:3306/bmw?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8&allowMultiQueries=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       minimum-idle: 5
@@ -17,8 +17,8 @@ spring:
     time-zone: GMT+8
   redis:
     database: 0
-    host: 10.170.15.213
-    port: 6373
+    host: 127.0.0.1
+    port: 6379
     password:
     timeout: 1000
     jedis:
@@ -29,20 +29,20 @@ spring:
         min-idle: 0
 io:
   url:  http://127.0.0.1:9900/
-  accessKey:  admin
-  secretKey:  Dd901213
+  accessKey:  eson
+  secretKey:  sa123456
   bucket: bomin
   domain: https://待配置/
 log:
-  path: /www/java/log/
+  path: /ZH_www/java/log/
 
 chat:
-  rcInstance: https://chat.59994.cn/
-  rcRestUrl:  https://chat.59994.cn/api/v1/
-  rcWsUrl:  wss://chat.59994.cn/websocket
-  rcAdminId:  hWHFKkNCe555Nt45C
-  rcAdminToken: N-8aV101Wm5vZFAU_gnT3HwV3E6TZjl-fZ-fLXQfeG1
-  rcRid:  64e06701d43f4066a851ca21
+  rcInstance: https://chat.btsqfw.xyz/
+  rcRestUrl:  https://chat.btsqfw.xyz/api/v1/
+  rcWsUrl:  wss://chat.btsqfw.xyz/websocket
+  rcAdminId:  NYc9kmByT3aNDSETY
+  rcAdminToken: 9t-Eg_yFSESj1R5P9mZqgU_ejC8i7OmaWvcnav63m2H
+  rcRid:  65d1d45f23b1be6a82d609e9
 sport:
   sportDomain: https://api.365live88.com
   sportKey: SLOCdJ491hkUB2wt9Y9WDCQ9cvDfN0hk
@@ -56,7 +56,7 @@ sport:
   sportStreamAppname: live
 mail:
   username: api
-  password: af5a2c2965fabb1dab16a4223c53fca8-c30053db-103b4faa
+  password: d65578a8192e0aa9171447c555af577b
   domain: mail.bggsdght.xyz
   url: https://api.mailgun.net/v3/${mail.domain}/messages
   from : support@bominwang.com
