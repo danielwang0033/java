@@ -4,7 +4,7 @@ spring:
   datasource:
     username: root
     password: barplus03582
-    url: jdbc:mysql://10.170.15.213:3306/bmw?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8&allowMultiQueries=true
+    url: jdbc:mysql://127.0.0.1:3306/bmw?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8&allowMultiQueries=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       minimum-idle: 5
