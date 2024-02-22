@@ -70,19 +70,19 @@ public class EveryDayTask {
      * 2023-11-23 20:36:30 星期四
      * 2023-11-23 20:38:30 星期四
      */
-    @Scheduled(cron = "30 */2 * * * *")
-    public void everyOneMinTask() {
-        if (check()) {
-            String uuid = UUID.randomUUID().toString();
-            logger.info("[" + uuid + "]batchAddStream-start");
-            try {
-                matchsService.batchAddStream();
-            } catch (Exception e) {
-                logger.error("采集比赛", e);
-            }
-            logger.info("[" + uuid + "]batchAddStream-end");
-        }
-    }
+    // @Scheduled(cron = "30 */2 * * * *")
+    // public void everyOneMinTask() {
+    //     if (check()) {
+    //         String uuid = UUID.randomUUID().toString();
+    //         logger.info("[" + uuid + "]batchAddStream-start");
+    //         try {
+    //             matchsService.batchAddStream();
+    //         } catch (Exception e) {
+    //             logger.error("采集比赛", e);
+    //         }
+    //         logger.info("[" + uuid + "]batchAddStream-end");
+    //     }
+    // }
 
     /**
      * 删除2天前比赛,每1小时执行一次
@@ -92,19 +92,19 @@ public class EveryDayTask {
      * 2023-11-23 23:10:50 星期四
      * 2023-11-24 00:10:50 星期五
      */
-    @Scheduled(cron = "50 10 * * * *")
-    public void clearMatchTask() {
-        if (check()) {
-            String uuid = UUID.randomUUID().toString();
-            logger.info("[" + uuid + "]clearMatchTask-start");
-            try {
-                matchsService.batchDelete();
-            } catch (Exception e) {
-                logger.error("删除2天前比赛", e);
-            }
-            logger.info("[" + uuid + "]clearMatchTask-end");
-        }
-    }
+    // @Scheduled(cron = "50 10 * * * *")
+    // public void clearMatchTask() {
+    //     if (check()) {
+    //         String uuid = UUID.randomUUID().toString();
+    //         logger.info("[" + uuid + "]clearMatchTask-start");
+    //         try {
+    //             matchsService.batchDelete();
+    //         } catch (Exception e) {
+    //             logger.error("删除2天前比赛", e);
+    //         }
+    //         logger.info("[" + uuid + "]clearMatchTask-end");
+    //     }
+    // }
 
     /**
      * 更新话题的阅读数,每3分钟执行一次
