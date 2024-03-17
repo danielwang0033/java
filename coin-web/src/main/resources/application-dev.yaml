@@ -36,9 +36,9 @@ io:
 log:
   path: /Users/admin/Documents/home/service/java/log
 chat:
-  rcInstance: https://chat.bggsdght.xyz/
-  rcRestUrl: https://chat.bggsdght.xyz/api/v1/
-  rcWsUrl: wss://chat.bggsdght.xyz/websocket
+  rcInstance: https://chat.hthtvvfg.xyz/
+  rcRestUrl: https://chat.hthtvvfg.xyz/api/v1/
+  rcWsUrl: wss://chat.hthtvvfg.xyz/websocket
   rcAdminId: PxyBCkScCkSnXfAX4
   rcAdminToken: 0-qCdEyeS9NGwiw40kZUZXCQjgT-n0-TADdhu6abHhF
   rcRid: 65cdc371fee2b94b49be9506
@@ -57,7 +57,7 @@ sport:
 mail:
   username: api
   password: af3b4e3a20c98e44c9855d97a7a668e2-8c8e5529-03cf3fae
-  domain: mail.bggsdght.xyz
+  domain: mail.hthtvvfg.xyz
   url: https://api.mailgun.net/v3/${mail.domain}/messages
   from : support@bominwang.com
 i18n:

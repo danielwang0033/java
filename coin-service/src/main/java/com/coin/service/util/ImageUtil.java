@@ -28,9 +28,9 @@ public class ImageUtil {
                 c1 = "";
             }
             if (env.endsWith("dev")) {
-                shortImageUrl = "https://minio.bggsdght.xyz/" + bucket + c1 + shortImageUrl;
+                shortImageUrl = "https://minio.hthtvvfg.xyz/" + bucket + c1 + shortImageUrl;
             } else if (env.endsWith("fat")) {
-                shortImageUrl = "https://minio.bggsdght.xyz/" + bucket + c1 + shortImageUrl;
+                shortImageUrl = "https://minio.hthtvvfg.xyz/" + bucket + c1 + shortImageUrl;
             } else if (env.endsWith("online")) {
                 shortImageUrl = "https://minio.59994.cn/" + bucket + c1 + shortImageUrl;
                 //shortImageUrl = "https://minio.btsqfw.xyz/" + bucket + c1 + shortImageUrl;
